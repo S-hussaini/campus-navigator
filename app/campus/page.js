@@ -7,13 +7,13 @@ const albertaInstitutions = [
   // Universities
   { name: "University of Alberta", link: "https://www.ualberta.ca", logo: "/UniversityofAlberta.png", type: "University", location: "Edmonton" },
   { name: "University of Calgary", link: "https://www.ucalgary.ca", logo: "/AZ-university-of-calgary.png", type: "University", location: "Calgary" },
-  { name: "University of Lethbridge", link: "https://www.ulethbridge.ca", logo: "/uleth.png", type: "University", location: "Lethbridge" },
-  { name: "Athabasca University", link: "https://www.athabascau.ca", logo: "/athabasca.png", type: "University", location: "Online" },
+  { name: "University of Lethbridge", link: "https://www.ulethbridge.ca", logo: "/UoL-logo.png", type: "University", location: "Lethbridge" },
+  { name: "Athabasca University", link: "https://www.athabascau.ca", logo: "/AU-athabasca-university.jpg", type: "University", location: "Online" },
   { name: "Mount Royal University", link: "https://www.mtroyal.ca", logo: "/MRU-TripleStack-CMYK.png", type: "University", location: "Calgary" },
   { name: "MacEwan University", link: "https://www.macewan.ca", logo: "/MacEwan-.png", type: "University", location: "Edmonton" },
-  { name: "Concordia University of Edmonton", link: "https://www.concordia.ab.ca", logo: "/concordia.png", type: "University", location: "Edmonton" },
-  { name: "The King's University", link: "https://www.kingsu.ca", logo: "/kings.png", type: "University", location: "Edmonton" },
-  { name: "St. Mary's University", link: "https://www.stmarys.ca", logo: "/stmarys.png", type: "University", location: "Calgary" },
+  { name: "Concordia University of Edmonton", link: "https://www.concordia.ab.ca", logo: "/concordia.avif", type: "University", location: "Edmonton" },
+  { name: "The King's University", link: "https://www.kingsu.ca", logo: "/kings.jpg", type: "University", location: "Edmonton" },
+  { name: "St. Mary's University", link: "https://www.stmarys.ca", logo: "/stmarys.jpeg", type: "University", location: "Calgary" },
   { name: "Ambrose University", link: "https://ambrose.edu", logo: "/ambrose.png", type: "University", location: "Calgary" },
   { name: "Burman University", link: "https://www.burmanu.ca", logo: "/burman.png", type: "University", location: "Lacombe" },
 
@@ -26,13 +26,13 @@ const albertaInstitutions = [
   { name: "Lakeland Polytechnic", link: "https://www.lakelandcollege.ca", logo: "/lakeland.png", type: "Polytechnic", location: "Vermilion" },
   { name: "Olds College of Agriculture & Technology", link: "https://www.oldscollege.ca", logo: "/olds.png", type: "College", location: "Olds" },
   { name: "Keyano College", link: "https://www.keyano.ca", logo: "/Keyano_College.png", type: "College", location: "Fort McMurray" },
-  { name: "Medicine Hat College", link: "https://www.mhc.ab.ca", logo: "/mhc.png", type: "College", location: "Medicine Hat" },
-  { name: "Portage College", link: "https://www.portagecollege.ca", logo: "/portage.png", type: "College", location: "Lac La Biche" },
+  { name: "Medicine Hat College", link: "https://www.mhc.ab.ca", logo: "/mhc.jpg", type: "College", location: "Medicine Hat" },
+  { name: "Portage College", link: "https://www.portagecollege.ca", logo: "/portage.jpg", type: "College", location: "Lac La Biche" },
   { name: "Red Deer Polytechnic", link: "https://rdpolytech.ca", logo: "/rdp.png", type: "Polytechnic", location: "Red Deer" },
   { name: "Northwestern Polytechnic", link: "https://www.nwpolytech.ca", logo: "/nwp.png", type: "Polytechnic", location: "Grande Prairie" },
-  { name: "Grande Prairie Regional College", link: "https://www.gprc.ab.ca", logo: "/gprc.png", type: "College", location: "Grande Prairie" },
-  { name: "Alberta University of the Arts", link: "https://www.auarts.ca", logo: "/auarts.png", type: "University", location: "Calgary" },
-  { name: "Southern Alberta Institute of Technology (SAIT)", link: "https://www.sait.ca", logo: "/SAIT-Logo-1.png", type: "Polytechnic", location: "Calgary" },
+  { name: "Grande Prairie Regional College", link: "https://www.gprc.ab.ca", logo: "/gprc.jpg", type: "College", location: "Grande Prairie" },
+  { name: "Alberta University of the Arts", link: "https://www.auarts.ca", logo: "/auarts.jpg", type: "University", location: "Calgary" },
+  { name: "Southern Alberta Institute of Technology (SAIT)", link: "https://www.sait.ca", logo: "/SAIT.jpg", type: "Polytechnic", location: "Calgary" },
 ];
 
 export default function CollegesPage() {
