@@ -137,7 +137,7 @@ export default function AboutPage() {
                   className="w-full h-full object-cover" 
                   src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1200"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1152d4]/40 to-transparent"></div>
+                <div className="absolute inset-0 bg-linear-to-r from-[#1152d4]/40 to-transparent"></div>
               </div>
             </div>
           </div>

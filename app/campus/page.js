@@ -83,7 +83,7 @@ export default function CollegesPage() {
               placeholder="search"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-12 pr-4 py-4 bg-white border border-slate-200 rounded-2xl shadow-sm focus:ring-2outline-none transition-all placeholder:text-slate-400"
+              className="w-full pl-12 pr-4 py-4 bg-white border border-slate-200 rounded-2xl shadow-sm focus:ring-2outline-none transition-all placeholder:text-slate-400 focus:ring-blue-600"
             />
           </div>
         </div>
@@ -117,10 +117,10 @@ export default function CollegesPage() {
                 <img 
                   src={inst.image} 
                   alt={inst.name} 
-                  className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" 
+                  className="w-full h-full object-cover grayscale-20 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" 
                   onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1541339907198-e08756ebafe3?q=80&w=800"; }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent opacity-60"></div>
+                <div className="absolute inset-0 bg-linear-to-t from-slate-950/40 via-transparent to-transparent opacity-60"></div>
                 
                 {/* Type Badge */}
                 <div className="absolute top-4 left-4">
@@ -136,7 +136,7 @@ export default function CollegesPage() {
               </div>
 
               {/* Content Area */}
-              <div className="p-8 pt-10 flex flex-col flex-grow">
+              <div className="p-8 pt-10 flex flex-col grow">
                 <h3 className="text-xl font-bold text-slate-900 mb-2 leading-tight tracking-tight group-hover:text-indigo-600 transition-colors">
                   {inst.name}
                 </h3>

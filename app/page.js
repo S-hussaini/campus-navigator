@@ -16,7 +16,7 @@ export default function Home() {
         {/* HERO SECTION: Refined & Minimalist */}
         <section className="relative px-6 pt-24 pb-32 overflow-hidden bg-[#F8FAFC]">
           {/* Subtle Background Accent */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-indigo-50/50 via-transparent to-transparent -z-10" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_top,var(--tw-gradient-stops))] from-indigo-50/50 via-transparent to-transparent -z-10" />
           <div className="max-w-5xl mx-auto text-center">
            
 
@@ -38,7 +38,7 @@ export default function Home() {
                 <input
                   type="text"
                   placeholder="Find a university or career..."
-                  className="flex-grow px-4 py-4 text-lg text-slate-800 focus:outline-none bg-transparent placeholder:text-slate-300"
+                  className="grow px-4 py-4 text-lg text-slate-800 focus:outline-none bg-transparent placeholder:text-slate-300"
                 />
                 <button className="bg-blue-900 hover:bg-blue-800 text-white px-10 py-4 rounded-xl font-bold transition-all shadow-lg shadow-indigo-100">
                   Search

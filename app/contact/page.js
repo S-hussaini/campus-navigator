@@ -22,7 +22,7 @@ export default function ContactPage() {
           <div className="max-w-4xl mx-auto text-center relative z-10">
             <span className="text-indigo-600 font-bold tracking-[0.3em] text-[10px] uppercase mb-6 block">Support Hub</span>
             <h1 className="text-6xl md:text-7xl font-extrabold text-slate-950 mb-8 tracking-tighter leading-none">
-              Let’s <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-900 to-blue-900">connect.</span>
+              Let’s <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-900 to-blue-900">connect.</span>
             </h1>
             <p className="text-slate-500 text-lg md:text-xl max-w-xl mx-auto font-light leading-relaxed">
               Have a question about Alberta's post-secondary landscape? Our team is here to help you navigate your journey.
