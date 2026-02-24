@@ -54,14 +54,13 @@ export default function Home() {
           <div className="group p-10 rounded-[2.5rem] bordershadow-xl hover:shadow-2xl transition-all duration-500 flex flex-col justify-between overflow-hidden relative">
             <div className="relative z-10">
               <div className="w-14 h-14 text-slate-950 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
-                <span className="material-symbols-outlined text-3xl">account_balance_wallet</span>
               </div>
-              <h3 className="text-2xl font-bold text-slate-900 mb-4">Scholarship Intelligence</h3>
+              <h3 className="text-2xl font-bold text-slate-900 mb-4">Alberta Student Aid</h3>
               <p className="text-slate-500 leading-relaxed mb-10">
                 Access curated financial aid opportunities across Alberta's diverse academic landscape.
               </p>
             </div>
-            <a href="#" className="relative z-10 flex items-center gap-2 text-indigo-600 font-bold group/link">
+            <a href="#" className="relative z-10 flex items-center gap-2 text-blue-900 font-bold group/link  hover:bg-blue-50 ">
               Explore Funding <span className="material-symbols-outlined text-xl transition-transform group-hover/link:translate-x-1">arrow_forward</span>
             </a>
             
@@ -71,17 +70,16 @@ export default function Home() {
           <div className="group  p-10 rounded-[2.5rem] shadow-xl hover:shadow-2xl transition-all duration-500 flex flex-col justify-between overflow-hidden relative">
             <div className="relative z-10">
               <div className="w-14 h-14 text-slate-950 rounded-2xl flex items-center justify-center mb-8">
-                <span className="material-symbols-outlined text-3xl">explore</span>
               </div>
               <h3 className="text-2xl font-bold text-slate-950 mb-4">Pathfinder Quiz</h3>
               <p className="text-slate-400 leading-relaxed mb-10">
                 Match your interests with high-demand industries in Alberta's growing economy.
               </p>
             </div>
-            <button className="relative z-10 w-fit px-8 py-3 text-indigo-700 font-bold rounded-xl hover:bg-indigo-50 transition-colors">
+            <button className="relative z-10 w-fit px-8 py-3 text-blue-900 font-bold rounded-xl hover:bg-blue-50 transition-colors">
               Start Assessment
             </button>
-            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl" />
+            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl" />
           </div>
         </section>
 
