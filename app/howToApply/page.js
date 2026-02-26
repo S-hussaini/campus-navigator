@@ -12,25 +12,25 @@ import {
 const steps = [
   {
     title: "Create Alberta.ca Account",
-    icon: <UserIcon className="w-16 h-16 text-[#4BAE53] mb-4" />,
+    icon: <UserIcon className="w-16 h-16 text-green-800 mb-4" />,
     description:
       "Sign in with an Alberta.ca account. If you don’t have one, create it. A basic account is enough — no verified account required.",
   },
   {
     title: "Complete Your Profile",
-    icon: <ClipboardDocumentIcon className="w-16 h-16 text-[#4BAE53] mb-4" />,
+    icon: <ClipboardDocumentIcon className="w-16 h-16 text-green-800 mb-4" />,
     description:
       "Fill out personal info: contact details, legal name, Alberta Student Number (ASN), academic history, schools attended, courses & grades. Missing info can delay your application.",
   },
   {
     title: "Start a New Application",
-    icon: <DocumentCheckIcon className="w-16 h-16 text-[#4BAE53] mb-4" />,
+    icon: <DocumentCheckIcon className="w-16 h-16 text-green-800 mb-4" />,
     description:
       "Select your institution and program. Fill in application questions carefully. You can apply to multiple institutions; fees are paid separately to each.",
   },
   {
     title: "Review, Submit & Pay Fees",
-    icon: <BanknotesIcon className="w-16 h-16 text-[#4BAE53] mb-4" />,
+    icon: <BanknotesIcon className="w-16 h-16 text-green-800 mb-4" />,
     description:
       "Check all info for accuracy. Pay application fees via credit/debit card. Transcripts may be automatically requested from Alberta Education; external transcripts may need manual submission.",
   },
@@ -76,35 +76,35 @@ export default function HowToApplyPage() {
           </h2>
 
           <div>
-            <h3 className="font-semibold text-[#4BAE53]">Alberta Student Number (ASN)</h3>
+            <h3 className="font-semibold text-green-800">Alberta Student Number (ASN)</h3>
             <p className="text-gray-700 text-sm">
               Unique number assigned to Alberta students. If you already have one, do not create a duplicate. If not, it will be created automatically when you start your application.
             </p>
           </div>
 
           <div>
-            <h3 className="font-semibold text-[#4BAE53]">Application Fees</h3>
+            <h3 className="font-semibold text-green-800">Application Fees</h3>
             <p className="text-gray-700 text-sm">
               Fees vary by institution and program. Each application requires a separate payment via credit/debit card.
             </p>
           </div>
 
           <div>
-            <h3 className="font-semibold text-[#4BAE53]">Transcripts</h3>
+            <h3 className="font-semibold text-green-800">Transcripts</h3>
             <p className="text-gray-700 text-sm">
               Alberta Education transcripts are automatically sent to institutions. For external transcripts (other provinces or countries), you may need to submit manually.
             </p>
           </div>
 
           <div>
-            <h3 className="font-semibold text-[#4BAE53]">Multiple Applications</h3>
+            <h3 className="font-semibold text-green-800">Multiple Applications</h3>
             <p className="text-gray-700 text-sm">
               You can apply to multiple institutions with the same profile. Fees and requirements apply separately. Track all applications in one account.
             </p>
           </div>
 
           <div>
-            <h3 className="font-semibold text-[#4BAE53]">Tips & Recommendations</h3>
+            <h3 className="font-semibold text-green-800">Tips & Recommendations</h3>
             <ul className="list-disc list-inside text-gray-700 text-sm">
               <li>Use a desktop or laptop — some features are limited on mobile.</li>
               <li>Keep your academic info handy for faster completion.</li>
@@ -119,7 +119,7 @@ export default function HowToApplyPage() {
             href="https://account.alberta.ca/ui/sign-in/signin"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block px-6 py-3 rounded-xl bg-[#4BAE53] text-white font-semibold hover:bg-green-600 transition"
+            className="inline-block px-6 py-3 rounded-xl bg-green-900 text-white font-semibold hover:bg-green-700 transition"
           >
             Start Your Application Now
           </a>

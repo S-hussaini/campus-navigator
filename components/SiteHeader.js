@@ -28,8 +28,9 @@ export default function PageHeader() {
             Home
           </Link>
           <Link href="/campus" className="hover:text-[#4BAE53] transition">
-            Campus 
+          Schools 
           </Link>
+
           <Link href="/contact" className="hover:text-[#4BAE53] transition">
             Contact Us
           </Link>
@@ -42,12 +43,6 @@ export default function PageHeader() {
             How to Apply 
           </Link>
 
-          <Link
-            href="https://account.alberta.ca/ui/sign-in/signin"
-            className="hover:text-[#4BAE53] transition"
-          >
-            Applynow 
-          </Link>
         </nav>
       </div>
     </header>

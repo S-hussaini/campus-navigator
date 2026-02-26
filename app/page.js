@@ -5,7 +5,7 @@ import SiteFooter from "../components/SiteFooter";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#fafafa] flex flex-col font-['Lexend'] antialiased text-slate-900">
+    <div className="min-h-screen bg-[#fafafa] flex flex-col  antialiased text-slate-900">
       {/* Font & Icon Imports */}
       <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -33,7 +33,7 @@ export default function Home() {
             <div className="max-w-2xl mx-auto relative group">
               <div className="relative flex bg-white rounded-2xl shadow-2xl border border-slate-100 p-2 items-center">
                 <div className="pl-4 text-slate-400">
-                  <span className="material-symbols-outlined text-2xl">search</span>
+                  <span className="material-symbols-outlined text-2xl"></span>
                 </div>
                 <input
                   type="text"
@@ -60,30 +60,33 @@ export default function Home() {
                 Access curated financial aid opportunities across Alberta's diverse academic landscape.
               </p>
             </div>
-            <a href="#" className="relative z-10 flex items-center gap-2 text-blue-900 font-bold group/link  hover:bg-blue-50 ">
-              Explore Funding <span className="material-symbols-outlined text-xl transition-transform group-hover/link:translate-x-1">arrow_forward</span>
+            <a href="#" className="relative z-10 flex items-center gap-2 rounded-2xl text-blue-900 font-bold group/link  hover:bg-blue-50 ">
+              Explore Funding <span className="material-symbols-outlined text-xl transition-transform group-hover/link:translate-x-1"></span>
             </a>
             
           </div>
 
           {/* Card 2: Quiz */}
-          <div className="group  p-10 rounded-[2.5rem] shadow-xl hover:shadow-2xl transition-all duration-500 flex flex-col justify-between overflow-hidden relative">
-            <div className="relative z-10">
-              <div className="w-14 h-14 text-slate-950 rounded-2xl flex items-center justify-center mb-8">
-              </div>
-              <h3 className="text-2xl font-bold text-slate-950 mb-4">Pathfinder Quiz</h3>
-              <p className="text-slate-400 leading-relaxed mb-10">
-                Match your interests with high-demand industries in Alberta's growing economy.
-              </p>
-            </div>
-            <button className="relative z-10 w-fit px-8 py-3 text-blue-900 font-bold rounded-xl hover:bg-blue-50 transition-colors">
-              Start Assessment
-            </button>
-            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl" />
-          </div>
-        </section>
-
-      </main>
+          <div className="group p-10 rounded-[1.5rem] shadow-xl hover:shadow-2xl transition-all duration-500 flex flex-col justify-between overflow-hidden relative border border-slate-50 bg-white">
+         <div className="relative z-10">
+        <div className="w-15h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-8">
+        <span className="material-symbols-outlined text-3xl"></span>
+        </div>
+        <h3 className="text-2xl font-bold text-slate-950 mb-4">Pathfinder Quiz</h3>
+        <p className="text-slate-400 leading-relaxed mb-10">
+          Match your interests with high-demand industries in Alberta's growing economy.
+      </p>
+     </div>
+     <Link href="/pathfinder">
+    <button className="relative z-10 w-full py-4 bg-blue-900 text-white font-bold rounded-2xl hover:bg-green-900 transition-all shadow-lg shadow-slate-200">
+      Start Assessment
+    </button>
+    </Link>
+    <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl" />
     </div>
+  </section>
+  </main>
+<SiteFooter />
+</div>
   );
 }
