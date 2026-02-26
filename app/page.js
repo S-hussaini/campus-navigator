@@ -37,11 +37,11 @@ export default function Home() {
                 </div>
                 <input
                   type="text"
-                  placeholder="Find a university or career..."
+                  placeholder="Ask Anything to CampusNavigator..."
                   className="grow px-4 py-4 text-lg text-slate-800 focus:outline-none bg-transparent placeholder:text-slate-300"
                 />
                 <button className="bg-blue-900 hover:bg-blue-800 text-white px-10 py-4 rounded-xl font-bold transition-all shadow-lg shadow-indigo-100">
-                  Search
+                  Chat
                 </button>
               </div>
             </div>
