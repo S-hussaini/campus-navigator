@@ -1,39 +1,281 @@
 "use client";
 
-import { useState, useEffect } from "react"; // Added useEffect
+import { useState, useMemo, useEffect } from "react"; // Added useEffect
 import { useSearchParams } from "next/navigation"; // Added useSearchParams
+import Fuse from "fuse.js";
 import PageHeader from "../../components/SiteHeader";
 import Link from "next/link";
 
 const albertaInstitutions = [
-  // ... your data stays exactly as it was
-  { name: "University of Alberta", link: "https://www.ualberta.ca", logo: "/UniversityofAlberta.png", type: "University", location: "Edmonton", image: "https://images.unsplash.com/photo-1541339907198-e08756ebafe3?q=80&w=800", careers: ["Doctor", "Engineer", "Lawyer", "Scientist", "Pharmacist"] },
-  { name: "University of Calgary", link: "https://www.ucalgary.ca", logo: "/AZ-university-of-calgary.png", type: "University", location: "Calgary", image: "https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=800", careers: ["Architect", "Veterinarian", "Nurse", "Software Developer", "Business Lead"] },
-  { name: "University of Lethbridge", link: "https://www.ulethbridge.ca", logo: "/UoL-logo.png", type: "University", location: "Lethbridge", image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=800", careers: ["Neuroscientist", "Teacher", "Artist", "Financial Analyst", "Political Scientist"] },
-  { name: "Athabasca University", link: "https://www.athabascau.ca", logo: "/AU-athabasca-university.jpg", type: "University", location: "Online", image: "https://images.unsplash.com/photo-1501503060445-738875b1017c?q=80&w=800", careers: ["Accountant", "Psychologist", "HR Manager", "Writer", "Data Scientist"] },
-  { name: "MacEwan University", link: "https://www.macewan.ca", logo: "/MacEwan-.png", type: "University", location: "Edmonton", image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=800", careers: ["Journalist", "Nurse", "Police Officer", "Social Worker", "Musician"] },
-  { name: "Mount Royal University", link: "https://www.mtroyal.ca", logo: "/MRU-TripleStack-CMYK.png", type: "University", location: "Calgary", image: "https://images.unsplash.com/photo-1498243639359-f7c895171f5f?q=80&w=800", careers: ["Pilot", "Public Relations", "Interior Designer", "Environmental Scientist"] },
-  { name: "Alberta University of the Arts", link: "https://www.auarts.ca", logo: "/auarts.jpg", type: "University", location: "Calgary", image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=800", careers: ["Graphic Designer", "Illustrator", "Photographer", "Animator", "Fashion Designer"] },
-  { name: "SAIT", link: "https://www.sait.ca", logo: "/SAIT-Logo-1.png", type: "Polytechnic", location: "Calgary", image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800", careers: ["Chef", "Aircraft Mechanic", "Cyber Security", "Electrician", "Civil Tech"] },
-  { name: "NAIT", link: "https://www.nait.ca", logo: "/nait-logo-png_seeklogo-239183.png", type: "Polytechnic", location: "Edmonton", image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=800", careers: ["Construction Manager", "Dental Tech", "Forensic Investigator", "Baker", "Power Engineer"] },
-  { name: "Lethbridge Polytechnic", link: "https://lethbridgecollege.ca", logo: "/Lethbridge.png", type: "Polytechnic", location: "Lethbridge", image: "https://images.unsplash.com/photo-1525921429624-479b6a26d84d?q=80&w=800", careers: ["Conservation Officer", "Mechanic", "Practical Nurse", "Digital Media"] },
-  { name: "Red Deer Polytechnic", link: "https://rdpolytech.ca", logo: "/rdp.png", type: "Polytechnic", location: "Red Deer", image: "https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=800", careers: ["Manufacturing Engineer", "Welder", "Kinesiologist", "Business Admin"] },
-  { name: "Northwestern Polytechnic", link: "https://www.nwpolytech.ca", logo: "/nwp.png", type: "Polytechnic", location: "Grande Prairie", image: "https://images.unsplash.com/photo-1492538368677-f6e0afe31dcc?q=80&w=800", careers: ["Plumber", "Forestry Tech", "Office Admin", "Heavy Equipment Op"] },
-  { name: "Lakeland Polytechnic", link: "https://www.lakelandcollege.ca", logo: "/lakeland.png", type: "Polytechnic", location: "Vermilion", image: "https://images.unsplash.com/photo-1500382017468-9049fee74a62?q=80&w=800", careers: ["Farm Manager", "Firefighter", "Vet Tech", "Esthetician"] },
-  { name: "Bow Valley College", link: "https://bowvalleycollege.ca", logo: "/blob.png", type: "College", location: "Calgary", image: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=800", careers: ["Health Care Aide", "Early Childhood Educator", "Legal Assistant", "Addictions Worker"] },
-  { name: "NorQuest College", link: "https://www.norquest.ca", logo: "/norquest-college.png", type: "College", location: "Edmonton", image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=800", careers: ["LPN", "Social Services Worker", "Pharmacy Assistant", "ESL Teacher"] },
-  { name: "Olds College", link: "https://www.oldscollege.ca", logo: "/olds.png", type: "College", location: "Olds", image: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?q=80&w=800", careers: ["Landscaper", "Horticulturist", "Brewmaster", "Equine Trainer"] },
-  { name: "Keyano College", link: "https://www.keyano.ca", logo: "/Keyano_College.png", type: "College", location: "Fort McMurray", image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800", careers: ["Crane Operator", "Process Operator", "Resource Manager", "Emergency Med Tech"] },
-  { name: "Medicine Hat College", link: "https://www.mhc.ab.ca", logo: "/mhc.jpg", type: "College", location: "Medicine Hat", image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=800", careers: ["Paramedic", "Occupational Therapist", "Small Business Owner", "Technician"] },
-  { name: "Portage College", link: "https://www.portagecollege.ca", logo: "/portage.jpg", type: "College", location: "Lac La Biche", image: "https://images.unsplash.com/photo-1494949649109-ecfc3b8c35df?q=80&w=800", careers: ["Forestry Tech", "Natural Resources", "Carpenter", "Hairstylist"] },
-  { name: "Northern Lakes College", link: "https://www.northernlakescollege.ca", logo: "/nlc.png", type: "College", location: "Slave Lake", image: "https://images.unsplash.com/photo-1500382017468-9049fee74a62?q=80&w=800", careers: ["Community Health Worker", "Trades Prep", "Admin Support"] },
-  { name: "Ambrose University", link: "https://ambrose.edu", logo: "/ambrose.png", type: "University", location: "Calgary", image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=800", careers: ["Pastor", "Theologian", "Music Teacher", "Community Leader"] },
-  { name: "Burman University", link: "https://www.burmanu.ca", logo: "/burman.png", type: "University", location: "Lacombe", image: "https://images.unsplash.com/photo-1491841573634-28140fc7ced7?q=80&w=800", careers: ["Religious Educator", "Counsellor", "Wellness Coach"] },
-  { name: "Concordia University of Edmonton", link: "https://www.concordia.ab.ca", logo: "/concordia.avif", type: "University", location: "Edmonton", image: "https://images.unsplash.com/photo-1568219656418-1593299c3f9b?q=80&w=800", careers: ["Information Security", "Management", "Science Researcher"] },
-  { name: "The King's University", link: "https://www.kingsu.ca", logo: "/kings.jpg", type: "University", location: "Edmonton", image: "https://images.unsplash.com/photo-1455734729978-db1ae4f687fc?q=80&w=800", careers: ["High School Teacher", "Kinesiologist", "Environmental Policy"] },
-  { name: "St. Mary's University", link: "https://www.stmarys.ca", logo: "/stmarys.jpeg", type: "University", location: "Calgary", image: "https://images.unsplash.com/photo-1544148103-0773bf10d330?q=80&w=800", careers: ["Historian", "Literary Critic", "Elementary Teacher"] },
-  { name: "Grande Prairie Regional College", link: "https://www.nwpolytech.ca", logo: "/nwp.png", type: "College", location: "Grande Prairie", image: "https://images.unsplash.com/photo-1519452635265-7b1fbfd1e4e0?q=80&w=800", careers: ["Power Engineer", "Nursing Assistant", "Office Manager"] },
+  {
+    name: "University of Alberta",
+    link: "https://www.ualberta.ca",
+    logo: "/UniversityofAlberta.png",
+    type: "University",
+    location: "Edmonton",
+    image: "https://images.unsplash.com/photo-1541339907198-e08756ebafe3?q=80&w=800",
+    careers: ["Doctor", "Engineer", "Lawyer", "Scientist", "Pharmacist"],
+    keywords: ["uofa", "u of a", "ualberta", "edmonton university", "medicine", "engineering", "pharmacy"]
+  },
+  {
+    name: "University of Calgary",
+    link: "https://www.ucalgary.ca",
+    logo: "/AZ-university-of-calgary.png",
+    type: "University",
+    location: "Calgary",
+    image: "https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=800",
+    careers: ["Architect", "Veterinarian", "Nurse", "Software Developer", "Business Lead"],
+    keywords: ["uofc", "u of c", "ucalgary", "calgary university", "software", "nursing", "vet"]
+  },
+  {
+    name: "University of Lethbridge",
+    link: "https://www.ulethbridge.ca",
+    logo: "/UoL-logo.png",
+    type: "University",
+    location: "Lethbridge",
+    image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=800",
+    careers: ["Neuroscientist", "Teacher", "Artist", "Financial Analyst", "Political Scientist"],
+    keywords: ["uleth", "u of l", "lethbridge university", "teacher", "education"]
+  },
+  {
+    name: "Athabasca University",
+    link: "https://www.athabascau.ca",
+    logo: "/AU-athabasca-university.jpg",
+    type: "University",
+    location: "Online",
+    image: "https://images.unsplash.com/photo-1501503060445-738875b1017c?q=80&w=800",
+    careers: ["Accountant", "Psychologist", "HR Manager", "Writer", "Data Scientist"],
+    keywords: ["au", "athabasca online university", "online university canada", "distance education"]
+  },
+  {
+    name: "MacEwan University",
+    link: "https://www.macewan.ca",
+    logo: "/MacEwan-.png",
+    type: "University",
+    location: "Edmonton",
+    image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=800",
+    careers: ["Journalist", "Nurse", "Police Officer", "Social Worker", "Musician"],
+    keywords: ["macewan", "macewan university", "edmonton university"]
+  },
+  {
+    name: "Mount Royal University",
+    link: "https://www.mtroyal.ca",
+    logo: "/MRU-TripleStack-CMYK.png",
+    type: "University",
+    location: "Calgary",
+    image: "https://images.unsplash.com/photo-1498243639359-f7c895171f5f?q=80&w=800",
+    careers: ["Pilot", "Public Relations", "Interior Designer", "Environmental Scientist"],
+    keywords: ["mru", "mount royal", "mount royal calgary", "aviation"]
+  },
+  {
+    name: "Alberta University of the Arts",
+    link: "https://www.auarts.ca",
+    logo: "/auarts.jpg",
+    type: "University",
+    location: "Calgary",
+    image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=800",
+    careers: ["Graphic Designer", "Illustrator", "Photographer", "Animator", "Fashion Designer"],
+    keywords: ["auarts", "arts university calgary", "art school alberta", "design"]
+  },
+  {
+    name: "SAIT",
+    link: "https://www.sait.ca",
+    logo: "/SAIT-Logo-1.png",
+    type: "Polytechnic",
+    location: "Calgary",
+    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800",
+    careers: ["Chef", "Aircraft Mechanic", "Cyber Security", "Electrician", "Civil Tech"],
+    keywords: ["southern alberta institute of technology", "sait calgary", "trades school", "cybersecurity"]
+  },
+  {
+    name: "NAIT",
+    link: "https://www.nait.ca",
+    logo: "/nait-logo-png_seeklogo-239183.png",
+    type: "Polytechnic",
+    location: "Edmonton",
+    image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=800",
+    careers: ["Construction Manager", "Dental Tech", "Forensic Investigator", "Baker", "Power Engineer"],
+    keywords: ["northern alberta institute of technology", "nait edmonton", "trades edmonton"]
+  },
+  {
+    name: "Lethbridge Polytechnic",
+    link: "https://lethbridgecollege.ca",
+    logo: "/Lethbridge.png",
+    type: "Polytechnic",
+    location: "Lethbridge",
+    image: "https://images.unsplash.com/photo-1525921429624-479b6a26d84d?q=80&w=800",
+    careers: ["Conservation Officer", "Mechanic", "Practical Nurse", "Digital Media"],
+    keywords: ["lethbridge college", "lethbridge poly", "nursing lethbridge"]
+  },
+  {
+    name: "Red Deer Polytechnic",
+    link: "https://rdpolytech.ca",
+    logo: "/rdp.png",
+    type: "Polytechnic",
+    location: "Red Deer",
+    image: "https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=800",
+    careers: ["Manufacturing Engineer", "Welder", "Kinesiologist", "Business Admin"],
+    keywords: ["rdp", "red deer college", "red deer polytechnic"]
+  },
+  {
+    name: "Northwestern Polytechnic",
+    link: "https://www.nwpolytech.ca",
+    logo: "/nwp.png",
+    type: "Polytechnic",
+    location: "Grande Prairie",
+    image: "https://images.unsplash.com/photo-1492538368677-f6e0afe31dcc?q=80&w=800",
+    careers: ["Plumber", "Forestry Tech", "Office Admin", "Heavy Equipment Op"],
+    keywords: ["nwp", "gprc", "grande prairie regional college", "northwestern polytechnic"]
+  },
+  {
+    name: "Lakeland Polytechnic",
+    link: "https://www.lakelandcollege.ca",
+    logo: "/lakeland.png",
+    type: "Polytechnic",
+    location: "Vermilion",
+    image: "https://images.unsplash.com/photo-1500382017468-9049fee74a62?q=80&w=800",
+    careers: ["Farm Manager", "Firefighter", "Vet Tech", "Esthetician"],
+    keywords: ["lakeland college", "lakeland poly", "agriculture college"]
+  },
+  {
+    name: "Bow Valley College",
+    link: "https://bowvalleycollege.ca",
+    logo: "/blob.png",
+    type: "College",
+    location: "Calgary",
+    image: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=800",
+    careers: ["Health Care Aide", "Early Childhood Educator", "Legal Assistant", "Addictions Worker"],
+    keywords: ["bow valley", "bvc", "calgary college", "health care aide"]
+  },
+  {
+    name: "NorQuest College",
+    link: "https://www.norquest.ca",
+    logo: "/norquest-college.png",
+    type: "College",
+    location: "Edmonton",
+    image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=800",
+    careers: ["LPN", "Social Services Worker", "Pharmacy Assistant", "ESL Teacher"],
+    keywords: ["norquest", "norquest edmonton", "lpn program"]
+  },
+  {
+    name: "Olds College",
+    link: "https://www.oldscollege.ca",
+    logo: "/olds.png",
+    type: "College",
+    location: "Olds",
+    image: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?q=80&w=800",
+    careers: ["Landscaper", "Horticulturist", "Brewmaster", "Equine Trainer"],
+    keywords: ["olds agriculture college", "olds college agriculture"]
+  },
+  {
+    name: "Keyano College",
+    link: "https://www.keyano.ca",
+    logo: "/Keyano_College.png",
+    type: "College",
+    location: "Fort McMurray",
+    image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800",
+    careers: ["Crane Operator", "Process Operator", "Resource Manager", "Emergency Med Tech"],
+    keywords: ["keyano", "fort mcmurray college", "oil sands training"]
+  },
+  {
+    name: "Medicine Hat College",
+    link: "https://www.mhc.ab.ca",
+    logo: "/mhc.jpg",
+    type: "College",
+    location: "Medicine Hat",
+    image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=800",
+    careers: ["Paramedic", "Occupational Therapist", "Small Business Owner", "Technician"],
+    keywords: ["mhc", "medicine hat college alberta"]
+  },
+  {
+    name: "Portage College",
+    link: "https://www.portagecollege.ca",
+    logo: "/portage.jpg",
+    type: "College",
+    location: "Lac La Biche",
+    image: "https://images.unsplash.com/photo-1494949649109-ecfc3b8c35df?q=80&w=800",
+    careers: ["Forestry Tech", "Natural Resources", "Carpenter", "Hairstylist"],
+    keywords: ["portage college alberta", "lac la biche college"]
+  },
+  {
+    name: "Northern Lakes College",
+    link: "https://www.northernlakescollege.ca",
+    logo: "/nlc.png",
+    type: "College",
+    location: "Slave Lake",
+    image: "https://images.unsplash.com/photo-1500382017468-9049fee74a62?q=80&w=800",
+    careers: ["Community Health Worker", "Trades Prep", "Admin Support"],
+    keywords: ["nlc", "northern lakes", "slave lake college"]
+  },
+  {
+    name: "Ambrose University",
+    link: "https://ambrose.edu",
+    logo: "/ambrose.png",
+    type: "University",
+    location: "Calgary",
+    image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=800",
+    careers: ["Pastor", "Theologian", "Music Teacher", "Community Leader"],
+    keywords: ["ambrose calgary", "christian university calgary"]
+  },
+  {
+    name: "Burman University",
+    link: "https://www.burmanu.ca",
+    logo: "/burman.png",
+    type: "University",
+    location: "Lacombe",
+    image: "https://images.unsplash.com/photo-1491841573634-28140fc7ced7?q=80&w=800",
+    careers: ["Religious Educator", "Counsellor", "Wellness Coach"],
+    keywords: ["burman lacombe", "burman university alberta"]
+  },
+  {
+    name: "Concordia University of Edmonton",
+    link: "https://www.concordia.ab.ca",
+    logo: "/concordia.avif",
+    type: "University",
+    location: "Edmonton",
+    image: "https://images.unsplash.com/photo-1568219656418-1593299c3f9b?q=80&w=800",
+    careers: ["Information Security", "Management", "Science Researcher"],
+    keywords: ["cue", "concordia edmonton", "concordia university edmonton"]
+  },
+  {
+    name: "The King's University",
+    link: "https://www.kingsu.ca",
+    logo: "/kings.jpg",
+    type: "University",
+    location: "Edmonton",
+    image: "https://images.unsplash.com/photo-1455734729978-db1ae4f687fc?q=80&w=800",
+    careers: ["High School Teacher", "Kinesiologist", "Environmental Policy"],
+    keywords: ["kings university edmonton", "the kings university"]
+  },
+  {
+    name: "St. Mary's University",
+    link: "https://www.stmarys.ca",
+    logo: "/stmarys.jpeg",
+    type: "University",
+    location: "Calgary",
+    image: "https://images.unsplash.com/photo-1544148103-0773bf10d330?q=80&w=800",
+    careers: ["Historian", "Literary Critic", "Elementary Teacher"],
+    keywords: ["stmarys calgary", "st marys university calgary"]
+  },
+  {
+    name: "Grande Prairie Regional College",
+    link: "https://www.nwpolytech.ca",
+    logo: "/nwp.png",
+    type: "College",
+    location: "Grande Prairie",
+    image: "https://images.unsplash.com/photo-1519452635265-7b1fbfd1e4e0?q=80&w=800",
+    careers: ["Power Engineer", "Nursing Assistant", "Office Manager"],
+    keywords: ["gprc", "grande prairie regional college"]
+  }
 ];
+
+function normalizeText(text) {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s]/g, "")
+    .replace(/\s+/g, " ");
+}
 
 export default function CollegesPage() {
   const [search, setSearch] = useState("");
@@ -49,16 +291,79 @@ export default function CollegesPage() {
     }
   }, [searchParams]);
 
-  const filtered = albertaInstitutions.filter((i) => {
-    const searchTerm = search.toLowerCase();
-    const matchesSearch = 
-      i.name.toLowerCase().includes(searchTerm) || 
-      i.location.toLowerCase().includes(searchTerm) ||
-      i.careers?.some(c => c.toLowerCase().includes(searchTerm));
+  const preparedInstitutions = useMemo(() => {
+    return albertaInstitutions.map((inst) => ({
+      ...inst,
+      searchText: normalizeText([
+        inst.name,
+        inst.location,
+        inst.type,
+        ...(inst.careers || []),
+        ...(inst.keywords || [])
+      ].join(" "))
+    }));
+  }, []);
 
-    const matchesFilter = activeFilter === "All" || i.type === activeFilter;
-    return matchesSearch && matchesFilter;
-  });
+  const strictFuse = useMemo(() => {
+    return new Fuse(preparedInstitutions, {
+      includeScore: true,
+      threshold: 0.24,
+      ignoreLocation: true,
+      keys: [
+        { name: "name", weight: 0.40 },
+        { name: "keywords", weight: 0.28 },
+        { name: "careers", weight: 0.18 },
+        { name: "location", weight: 0.10 },
+        { name: "searchText", weight: 0.04 },
+      ],
+      getFn: (obj, path) => {
+        const value = obj[path];
+        if (Array.isArray(value)) return value.map((v) => normalizeText(String(v)));
+        return normalizeText(String(value || ""));
+      },
+    });
+  }, [preparedInstitutions]);
+
+  const looseFuse = useMemo(() => {
+    return new Fuse(preparedInstitutions, {
+      includeScore: true,
+      threshold: 0.36,
+      ignoreLocation: true,
+      keys: [
+        { name: "name", weight: 0.38 },
+        { name: "keywords", weight: 0.27 },
+        { name: "careers", weight: 0.18 },
+        { name: "location", weight: 0.10 },
+        { name: "searchText", weight: 0.07 },
+      ],
+      getFn: (obj, path) => {
+        const value = obj[path];
+        if (Array.isArray(value)) return value.map((v) => normalizeText(String(v)));
+        return normalizeText(String(value || ""));
+      },
+    });
+  }, [preparedInstitutions]);
+
+  const filtered = useMemo(() => {
+    const normalizedSearch = normalizeText(search);
+    let results = preparedInstitutions;
+
+    if (normalizedSearch) {
+      let fuseResults = strictFuse.search(normalizedSearch);
+
+      if (fuseResults.length === 0 || (fuseResults[0]?.score ?? 1) > 0.18) {
+        fuseResults = looseFuse.search(normalizedSearch);
+      }
+
+      results = fuseResults.map((r) => r.item);
+    }
+
+    if (activeFilter !== "All") {
+      results = results.filter((i) => i.type === activeFilter);
+    }
+
+    return results;
+  }, [search, activeFilter, preparedInstitutions, strictFuse, looseFuse]);
 
   return (
     <div className="min-h-screen bg-[#fafafa] text-slate-900 antialiased">
