@@ -1,9 +1,44 @@
 "use client";
 
+import { useState } from "react";
 import PageHeader from "../../components/SiteHeader";
 import SiteFooter from "../../components/SiteFooter";
 
 export default function ContactPage() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    category: "General Inquiry",
+    message: "",
+  });
+  const [status, setStatus] = useState(null); // 'sending' | 'success' | 'error'
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus("sending");
+
+    try {
+      const res = await fetch("/contact/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (res.ok) {
+        setStatus("success");
+        setFormData({ name: "", email: "", category: "General Inquiry", message: "" });
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#fafafa] flex flex-col font-['Lexend'] antialiased">
       {/* Font & Icon Imports */}
@@ -18,11 +53,11 @@ export default function ContactPage() {
           {/* Subtle Background Glows */}
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-indigo-50 rounded-full blur-[120px] opacity-60" />
           <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-50 rounded-full blur-[120px] opacity-60" />
-          
+
           <div className="max-w-4xl mx-auto text-center relative z-10">
             <span className="text-indigo-600 font-bold tracking-[0.3em] text-[10px] uppercase mb-6 block">Support Hub</span>
             <h1 className="text-6xl md:text-7xl font-extrabold text-slate-950 mb-8 tracking-tighter leading-none">
-              Let’s <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-900 to-blue-900">connect.</span>
+              Let's <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-900 to-blue-900">connect.</span>
             </h1>
             <p className="text-slate-500 text-lg md:text-xl max-w-xl mx-auto font-light leading-relaxed">
               Have a question about Alberta's post-secondary landscape? Our team is here to help you navigate your journey.
@@ -33,18 +68,33 @@ export default function ContactPage() {
         {/* CONTENT SECTION: Floating Card with Depth */}
         <section className="max-w-7xl mx-auto px-6 -mt-24 pb-32 relative z-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-            
+
             {/* Left Column: Glassmorphism Form */}
             <div className="lg:col-span-8 bg-white/80 backdrop-blur-xl rounded-[3rem] p-8 md:p-16 shadow-[0_32px_64px_-15px_rgba(0,0,0,0.05)] border border-white relative overflow-hidden">
               <div className="relative z-10">
                 <h2 className="text-3xl font-bold text-slate-900 mb-2">Send a Message</h2>
                 <p className="text-slate-400 font-light mb-12 uppercase tracking-widest text-[10px]">Average response time: 2 hours</p>
 
-                <form className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
+                {status === "success" && (
+                  <div className="mb-8 p-4 bg-green-50 text-green-700 rounded-xl text-sm font-medium">
+                    ✅ Your message has been sent successfully!
+                  </div>
+                )}
+                {status === "error" && (
+                  <div className="mb-8 p-4 bg-red-50 text-red-700 rounded-xl text-sm font-medium">
+                    ❌ Something went wrong. Please try again.
+                  </div>
+                )}
+
+                <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
                   <div className="space-y-3">
                     <label className="text-[11px] font-bold text-slate-400 uppercase tracking-[0.15em] ml-1">Full Name</label>
                     <input
                       type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
                       placeholder="Jane Doe"
                       className="w-full bg-slate-50/50 border-b border-slate-100 px-1 py-4 focus:outline-none focus:border-indigo-600 transition-all text-slate-900 placeholder:text-slate-300"
                     />
@@ -53,6 +103,10 @@ export default function ContactPage() {
                     <label className="text-[11px] font-bold text-slate-400 uppercase tracking-[0.15em] ml-1">Email Address</label>
                     <input
                       type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
                       placeholder="jane@university.ca"
                       className="w-full bg-slate-50/50 border-b border-slate-100 px-1 py-4 focus:outline-none focus:border-indigo-600 transition-all text-slate-900 placeholder:text-slate-300"
                     />
@@ -60,7 +114,7 @@ export default function ContactPage() {
 
                   <div className="md:col-span-2 space-y-3">
                     <label className="text-[11px] font-bold text-slate-400 uppercase tracking-[0.15em] ml-1">Inquiry Category</label>
-                    <select className="w-full bg-transparent border-b border-slate-100 py-4 focus:outline-none focus:border-indigo-600 transition-all text-slate-500 appearance-none cursor-pointer">
+                    <select name="category" value={formData.category} onChange={handleChange} className="w-full bg-transparent border-b border-slate-100 py-4 focus:outline-none focus:border-indigo-600 transition-all text-slate-500 appearance-none cursor-pointer">
                       <option>General Inquiry</option>
                       <option>Admissions Help</option>
                       <option>Technical Support</option>
@@ -71,6 +125,10 @@ export default function ContactPage() {
                   <div className="md:col-span-2 space-y-3">
                     <label className="text-[11px] font-bold text-slate-400 uppercase tracking-[0.15em] ml-1">Your Message</label>
                     <textarea
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
                       rows={4}
                       placeholder="Tell us what you're looking for..."
                       className="w-full bg-slate-50/50 border-b border-slate-100 px-1 py-4 focus:outline-none focus:border-indigo-600 transition-all text-slate-900 placeholder:text-slate-300 resize-none"
@@ -78,8 +136,12 @@ export default function ContactPage() {
                   </div>
 
                   <div className="md:col-span-2 pt-4">
-                    <button className="w-full md:w-auto bg-blue-950 text-white px-12 py-5 rounded-2xl font-bold hover:bg-blue-800 transition-all shadow-2xl flex items-center justify-center gap-3">
-                      Submit Request
+                    <button
+                      type="submit"
+                      disabled={status === "sending"}
+                      className="w-full md:w-auto bg-blue-950 text-white px-12 py-5 rounded-2xl font-bold hover:bg-blue-800 transition-all shadow-2xl flex items-center justify-center gap-3 disabled:opacity-50"
+                    >
+                      {status === "sending" ? "Sending..." : "Submit Request"}
                       <span className="material-symbols-outlined text-sm">arrow_forward</span>
                     </button>
                   </div>
