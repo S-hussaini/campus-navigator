@@ -217,7 +217,6 @@ export default function PathfinderPage() {
               these careers:
             </p>
 
-            {/* Insert this into your Result Phase */}
             {isLoadingAi ? (
               <div className="py-10 animate-pulse text-blue-600 font-bold">Gemini is analyzing your path...</div>
             ) : (
