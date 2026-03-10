@@ -7,7 +7,7 @@ export async function POST(req) {
   try {
     const { message, history } = await req.json();
     const model = genAI.getGenerativeModel({
-      model: "gemini-2.5-flash",
+      model: "gemini-3.1-flash-lite-preview",
       systemInstruction: `You are the Campus Navigator Assistant. 
       1. Use **bold text** for important keywords or school names. 
       2. Use bulleted lists for program suggestions. 
