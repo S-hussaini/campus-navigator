@@ -1,102 +1,65 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import { getCareerGuidance } from "@/lib/gemini";
+import { generateDynamicQuestions, evaluateQuizResults } from "@/lib/gemini";
 
-// 1. Career Mapping Data
-const careerDetails = {
-  Builder: {
-    title: "Technical & Trades Specialist",
-    icon: "⚡",
-    color: "bg-orange-50 text-orange-600 border-orange-100",
-    list: [
-      "Civil Engineering Tech",
-      "Aircraft Mechanic",
-      "Power Engineer",
-      "Construction Manager",
-      "Renewable Energy Tech",
-    ],
-  },
-  Healer: {
-    title: "Health & Wellness Professional",
-    icon: "❤️",
-    color: "bg-red-50 text-red-600 border-red-100",
-    list: ["Registered Nurse", "Diagnostic Sonographer", "Paramedic", "Pharmacist", "Kinesiologist"],
-  },
-  Creator: {
-    title: "Creative & Digital Innovator",
-    icon: "🎨",
-    color: "bg-emerald-50 text-emerald-600 border-emerald-100",
-    list: ["UX/UI Designer", "Digital Media Producer", "Animator", "Interior Designer", "Marketing Content Lead"],
-  },
-  Strategist: {
-    title: "Business & Systems Leader",
-    icon: "📈",
-    color: "bg-blue-50 text-blue-600 border-blue-100",
-    list: ["Data Analyst", "Project Manager", "Financial Advisor", "Cyber Security Analyst", "Supply Chain Lead"],
-  },
+// Visual themes for the final results
+const themeMap = {
+  Builder: { icon: "⚡", color: "bg-orange-50 text-orange-600 border-orange-100" },
+  Healer: { icon: "❤️", color: "bg-red-50 text-red-600 border-red-100" },
+  Creator: { icon: "🎨", color: "bg-emerald-50 text-emerald-600 border-emerald-100" },
+  Strategist: { icon: "📈", color: "bg-blue-50 text-blue-600 border-blue-100" },
 };
-
-const questions = [
-  {
-    question: "What's your ideal work environment?",
-    options: [
-      { text: "Hands-on in a workshop or industrial site", category: "Builder" },
-      { text: "A high-stakes clinical or hospital setting", category: "Healer" },
-      { text: "A high-end creative studio or digital space", category: "Creator" },
-      { text: "A fast-paced corporate office or firm", category: "Strategist" },
-    ],
-  },
-  {
-    question: "How do you prefer to tackle a challenge?",
-    options: [
-      { text: "I build or fix a physical solution", category: "Builder" },
-      { text: "I provide care and support to others", category: "Healer" },
-      { text: "I create a new visual or concept", category: "Creator" },
-      { text: "I analyze the data and lead the team", category: "Strategist" },
-    ],
-  },
-  {
-    question: "Which high school subject did you enjoy most?",
-    options: [
-      { text: "Applied Tech, Shop, or Physics", category: "Builder" },
-      { text: "Biology, Chemistry, or Social Studies", category: "Healer" },
-      { text: "Art, Design, or Media Studies", category: "Creator" },
-      { text: "Business, Law, or Mathematics", category: "Strategist" },
-    ],
-  },
-];
 
 export default function PathfinderPage() {
   const [step, setStep] = useState(-1);
-  const [scores, setScores] = useState({ Builder: 0, Healer: 0, Creator: 0, Strategist: 0 });
+  
+  // AI States
+  const [questions, setQuestions] = useState([]);
+  const [userAnswers, setUserAnswers] = useState([]);
+  const [resultData, setResultData] = useState(null);
+  
+  // Loading States
+  const [isGeneratingQuiz, setIsGeneratingQuiz] = useState(false);
+  const [isAssessing, setIsAssessing] = useState(false);
 
-  const [aiRecommendation, setAiRecommendation] = useState(null);
-  const [isLoadingAi, setIsLoadingAi] = useState(false);
-
-  const handleAnswer = (cat) => {
-    setScores((prev) => ({ ...prev, [cat]: prev[cat] + 1 }));
-    setStep(step + 1);
+  // Triggered when user clicks "Begin Assessment"
+  const handleStartQuiz = async () => {
+    setIsGeneratingQuiz(true);
+    try {
+      const generatedQuestions = await generateDynamicQuestions();
+      generatedQuestions.forEach(q => q.options.sort(() => Math.random() - 0.5));
+      setQuestions(generatedQuestions);
+      setStep(0);
+    } catch (error) {
+      console.error("Failed to generate questions", error);
+      alert("Uh oh! AI is taking a break. Try again in a moment.");
+    } finally {
+      setIsGeneratingQuiz(false);
+    }
   };
 
-  const winnerKey = Object.keys(scores).reduce((a, b) => (scores[a] > scores[b] ? a : b));
-  const result = careerDetails[winnerKey];
+  // Triggered when user clicks an answer
+  const handleAnswer = async (questionText, selectedOption) => {
+    const newAnswers = [
+      ...userAnswers, 
+      { question: questionText, answer: selectedOption.text, category: selectedOption.category }
+    ];
+    setUserAnswers(newAnswers);
 
-  useEffect(() => {
-    if (step === questions.length) {
-      fetchAIRecommendation();
-    }
-  }, [step]);
-
-  const fetchAIRecommendation = async () => {
-    setIsLoadingAi(true);
-    try {
-      const data = await getCareerGuidance(winnerKey, scores);
-      setAiRecommendation(data);
-    } catch (error) {
-      console.error("AI Fetch Error:", error);
-    } finally {
-      setIsLoadingAi(false);
+    if (step + 1 < questions.length) {
+      setStep(step + 1);
+    } else {
+      setStep(step + 1);
+      setIsAssessing(true);
+      try {
+        const assessment = await evaluateQuizResults(newAnswers);
+        setResultData(assessment);
+      } catch (error) {
+        console.error("Failed to evaluate results", error);
+      } finally {
+        setIsAssessing(false);
+      }
     }
   };
 
@@ -112,16 +75,9 @@ export default function PathfinderPage() {
         </Link>
 
         <div className="hidden md:flex items-center gap-8 text-xs font-bold uppercase tracking-widest text-gray-500">
-          <Link href="/campus" className="hover:text-[#b22222]">
-            Campuses
-          </Link>
-          <Link href="/careers" className="hover:text-blue-900">
-            Careers
-          </Link>
-          <Link
-            href="/contact"
-            className="border-2 border-[#1a1a1a] px-4 py-2 rounded-md hover:bg-[#1a1a1a] hover:text-white transition-all text-[#1a1a1a]"
-          >
+          <Link href="/campus" className="hover:text-[#b22222]">Campuses</Link>
+          <Link href="/careers" className="hover:text-blue-900">Careers</Link>
+          <Link href="/contact" className="border-2 border-[#1a1a1a] px-4 py-2 rounded-md hover:bg-[#1a1a1a] hover:text-white transition-all text-[#1a1a1a]">
             Request Info
           </Link>
         </div>
@@ -130,7 +86,7 @@ export default function PathfinderPage() {
       {/* 2. MAIN CONTENT AREA */}
       <div className="flex-grow">
         {step === -1 ? (
-          /* INTRO / HERO SECTION */
+          /* YOUR ORIGINAL HERO SECTION */
           <div className="flex flex-col animate-in fade-in duration-700">
             <div className="max-w-5xl mx-auto w-full px-6 mt-10">
               <div className="w-full h-[300px] md:h-[400px] relative overflow-hidden rounded-[2.5rem] shadow-xl border border-gray-100">
@@ -154,10 +110,11 @@ export default function PathfinderPage() {
                 industry and learning format for the way you live.
               </p>
               <button
-                onClick={() => setStep(0)}
-                className="px-12 py-5 bg-[#002855] text-white font-black rounded-full hover:bg-blue-800 transition-all uppercase tracking-widest text-sm shadow-lg shadow-blue-100"
+                onClick={handleStartQuiz}
+                disabled={isGeneratingQuiz}
+                className="px-12 py-5 bg-[#002855] text-white font-black rounded-full hover:bg-blue-800 transition-all uppercase tracking-widest text-sm shadow-lg shadow-blue-100 disabled:opacity-70 disabled:cursor-wait"
               >
-                Begin Assessment
+                {isGeneratingQuiz ? "Generating Quiz..." : "Begin Assessment"}
               </button>
               <p className="mt-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
                 Takes about 3 minutes
@@ -172,107 +129,74 @@ export default function PathfinderPage() {
                 <span className="text-[#b22222] font-black text-xs tracking-[0.3em] uppercase">Phase 0{step + 1}</span>
                 <h2 className="text-4xl font-black text-slate-900 mt-4 leading-tight">{questions[step].question}</h2>
               </div>
-              <span className="text-gray-300 font-mono text-xl">
-                {step + 1}/{questions.length}
-              </span>
+              <span className="text-gray-300 font-mono text-xl">{step + 1}/{questions.length}</span>
             </div>
 
             <div className="grid gap-4">
               {questions[step].options.map((opt, i) => (
                 <button
                   key={i}
-                  onClick={() => handleAnswer(opt.category)}
+                  onClick={() => handleAnswer(questions[step].question, opt)}
                   className="w-full p-8 text-left rounded-3xl border-2 border-gray-100 hover:border-blue-600 hover:bg-blue-50/30 transition-all group flex items-center justify-between"
                 >
                   <div className="flex items-center">
-                    <span className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 group-hover:text-blue-600 group-hover:bg-white transition-all mr-6 font-bold text-sm">
-                      0{i + 1}
-                    </span>
+                    <span className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 group-hover:text-blue-600 group-hover:bg-white transition-all mr-6 font-bold text-sm">0{i + 1}</span>
                     <span className="text-xl font-bold text-slate-700">{opt.text}</span>
                   </div>
-                  <span className="text-2xl opacity-0 group-hover:opacity-100 transition-all transform group-hover:translate-x-2 text-blue-600">
-                    →
-                  </span>
                 </button>
               ))}
             </div>
           </div>
         ) : (
           /* RESULT PHASE */
-          <div className="max-w-4xl mx-auto px-8 py-20 text-center animate-in zoom-in-95 duration-700">
-            <div
-              className={`w-20 h-20 ${result.color} rounded-3xl flex items-center justify-center text-4xl mx-auto mb-6 shadow-sm border`}
-            >
-              {result.icon}
-            </div>
-
-            <span className="inline-block px-4 py-1.5 bg-blue-50 text-blue-600 rounded-full font-black text-[10px] uppercase tracking-[0.2em] mb-4 border border-blue-100">
-              Analysis Complete
-            </span>
-
-            <h2 className="text-6xl font-black mb-4 text-slate-900 tracking-tighter italic">The {winnerKey}</h2>
-
-            <p className="text-gray-500 text-lg mb-12 max-w-xl mx-auto">
-              Your profile aligns perfectly with high-demand roles in Alberta. Based on your {winnerKey} traits, explore
-              these careers:
-            </p>
-
-            {isLoadingAi ? (
-              <div className="py-10 animate-pulse text-blue-600 font-bold">Gemini is analyzing your path...</div>
+          <div className="max-w-4xl mx-auto px-8 py-20 text-center">
+            {isAssessing || !resultData ? (
+               <div className="py-20 flex flex-col items-center justify-center space-y-4 animate-pulse">
+                  <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin" />
+                  <h2 className="text-2xl font-bold text-blue-900">AI is analyzing your answers...</h2>
+               </div>
             ) : (
-              aiRecommendation && (
+              <div className="animate-in zoom-in-95 duration-700">
+                <div className={`w-20 h-20 ${themeMap[resultData.archetype]?.color || 'bg-gray-100 text-gray-600'} rounded-3xl flex items-center justify-center text-4xl mx-auto mb-6 shadow-sm border`}>
+                  {themeMap[resultData.archetype]?.icon || '✨'}
+                </div>
+
+                <h2 className="text-6xl font-black mb-2 text-slate-900 tracking-tighter italic">The {resultData.archetype}</h2>
+                <h3 className="text-xl font-bold text-gray-400 mb-8 uppercase tracking-widest">{resultData.title}</h3>
+
                 <div className="max-w-2xl mx-auto mb-12 p-8 bg-blue-50/50 rounded-[2rem] border border-blue-100 text-left">
-                  <h3 className="text-blue-900 font-black uppercase tracking-widest text-xs mb-4 flex items-center gap-2">
-                    <span className="w-2 h-2 bg-blue-500 rounded-full animate-ping" />
-                    AI Tailored Insights
-                  </h3>
-                  <p className="text-slate-700 leading-relaxed mb-6 italic">{aiRecommendation.summary}</p>
-
-                  <div className="grid grid-cols-1 gap-4">
-                    <h4 className="font-bold text-slate-900 text-sm uppercase">Recommended Alberta Programs:</h4>
-                    {aiRecommendation.courses.map((course, i) => (
-                      <div key={i} className="flex items-center gap-3 text-slate-600 text-sm">
-                        <span className="text-blue-500">✦</span> {course}
-                      </div>
-                    ))}
+                  <p className="text-slate-700 leading-relaxed mb-6 italic">{resultData.summary}</p>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                      <h4 className="font-black text-slate-900 text-xs uppercase tracking-widest mb-3">Careers</h4>
+                      <ul className="space-y-2">
+                        {resultData.careers.map((career, i) => (
+                          <li key={i} className="text-sm text-slate-600 flex gap-2"><span className="text-blue-500">✦</span> {career}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <h4 className="font-black text-slate-900 text-xs uppercase tracking-widest mb-3">Programs</h4>
+                      <ul className="space-y-2">
+                        {resultData.courses.map((course, i) => (
+                          <li key={i} className="text-sm text-slate-600 flex gap-2"><span className="text-blue-500">✦</span> {course}</li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
-
+                  
                   <div className="mt-6 pt-6 border-t border-blue-100">
                     <span className="text-[10px] font-bold text-blue-400 uppercase">Focus Skill:</span>
-                    <p className="font-bold text-slate-800">{aiRecommendation.futureSkill}</p>
+                    <p className="font-bold text-slate-800">{resultData.futureSkill}</p>
                   </div>
                 </div>
-              )
-            )}
 
-            {/* CAREER LIST GRID */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-12 max-w-2xl mx-auto">
-              {result.list.map((job, i) => (
-                <div
-                  key={i}
-                  className="bg-slate-50 border border-slate-100 p-5 rounded-2xl flex items-center gap-4 hover:border-blue-200 hover:bg-white transition-all group"
-                >
-                  <span className="w-8 h-8 rounded-full bg-white group-hover:bg-blue-600 group-hover:text-white flex items-center justify-center text-[10px] font-black text-slate-400 border border-slate-100 transition-colors">
-                    0{i + 1}
-                  </span>
-                  <span className="font-bold text-slate-700 text-left">{job}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="flex flex-col items-center gap-4">
-              <Link href={`/campus?search=${winnerKey}`} className="w-full max-w-md">
-                <button className="w-full py-6 bg-[#1a1a1a] text-white font-black rounded-2xl text-xl uppercase tracking-widest hover:bg-blue-900 transition-all shadow-xl shadow-gray-100">
-                  View My Schools
+                <button onClick={() => window.location.reload()} className="text-xs font-bold text-gray-400 hover:text-[#b22222] uppercase tracking-widest transition-colors mt-4">
+                  ↺ Retake Assessment
                 </button>
-              </Link>
-              <button
-                onClick={() => window.location.reload()}
-                className="text-xs font-bold text-gray-400 hover:text-[#b22222] uppercase tracking-widest transition-colors mt-4"
-              >
-                ↺ Retake Assessment
-              </button>
-            </div>
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -281,15 +205,9 @@ export default function PathfinderPage() {
       <footer className="w-full border-t border-gray-100 py-10 text-center bg-gray-50/50">
         <div className="flex flex-col items-center gap-4">
           <div className="flex gap-6 text-[10px] font-bold uppercase tracking-widest text-gray-400">
-            <Link href="/privacy" className="hover:text-gray-900">
-              Privacy Policy
-            </Link>
-            <Link href="/terms" className="hover:text-gray-900">
-              Terms of Use
-            </Link>
-            <Link href="/contact" className="hover:text-gray-900">
-              Contact
-            </Link>
+            <Link href="/privacy" className="hover:text-gray-900">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-gray-900">Terms of Use</Link>
+            <Link href="/contact" className="hover:text-gray-900">Contact</Link>
           </div>
           <p className="text-[9px] font-bold text-gray-300 uppercase tracking-[0.2em]">
             Designed for Alberta Students © 2026
