@@ -89,7 +89,7 @@ export default function PathfinderPage() {
           /* YOUR ORIGINAL HERO SECTION */
           <div className="flex flex-col animate-in fade-in duration-700">
             <div className="max-w-5xl mx-auto w-full px-6 mt-10">
-              <div className="w-full h-[300px] md:h-[400px] relative overflow-hidden rounded-[2.5rem] shadow-xl border border-gray-100">
+              <div className="w-full h-75 md:h-100 relative overflow-hidden rounded-[2.5rem] shadow-xl border border-gray-100">
                 <img
                   src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=1471"
                   alt="Students studying"
@@ -164,7 +164,7 @@ export default function PathfinderPage() {
                 <h2 className="text-6xl font-black mb-2 text-slate-900 tracking-tighter italic">The {resultData.archetype}</h2>
                 <h3 className="text-xl font-bold text-gray-400 mb-8 uppercase tracking-widest">{resultData.title}</h3>
 
-                <div className="max-w-2xl mx-auto mb-12 p-8 bg-blue-50/50 rounded-[2rem] border border-blue-100 text-left">
+                <div className="max-w-2xl mx-auto mb-12 p-8 bg-blue-50/50 rounded-4xl border border-blue-100 text-left">
                   <p className="text-slate-700 leading-relaxed mb-6 italic">{resultData.summary}</p>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

@@ -46,7 +46,7 @@ export default function HowToApplyPage() {
 
       {/* DOMESTIC CHOICE MODAL */}
       {showModal && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
+        <div className="fixed inset-0 z-100lex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
           <div className="bg-white rounded-[3rem] p-10 max-w-2xl w-full shadow-2xl relative border border-slate-100">
             <button 
               onClick={() => setShowModal(false)}
@@ -61,7 +61,7 @@ export default function HowToApplyPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Link href="/adultlearners" className="group p-8 rounded-[2rem] bg-slate-50 border border-slate-100 hover:border-blue-600 hover:bg-blue-50 transition-all text-center">
+              <Link href="/adultlearners" className="group p-8 rounded-4xl bg-slate-50 border border-slate-100 hover:border-blue-600 hover:bg-blue-50 transition-all text-center">
                 <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm group-hover:bg-blue-600 group-hover:text-white transition-all">
                   <UserIcon className="w-6 h-6" />
                 </div>
@@ -69,7 +69,7 @@ export default function HowToApplyPage() {
                 <p className="text-slate-500 text-xs font-medium">Returning to study or changing careers.</p>
               </Link>
 
-              <a href="https://account.alberta.ca/ui/sign-in/signin" className="group p-8 rounded-[2rem] bg-slate-50 border border-slate-100 hover:border-blue-600 hover:bg-blue-50 transition-all text-center">
+              <a href="https://account.alberta.ca/ui/sign-in/signin" className="group p-8 rounded-4xl-slate-50 border border-slate-100 hover:border-blue-600 hover:bg-blue-50 transition-all text-center">
                 <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm group-hover:bg-blue-600 group-hover:text-white transition-all">
                   <AcademicCapIcon className="w-6 h-6" />
                 </div>
@@ -124,9 +124,9 @@ export default function HowToApplyPage() {
         </div>
 
         <div className="grid lg:grid-cols-5 gap-8 items-stretch">
-            <div className="lg:col-span-2 rounded-[3rem] overflow-hidden shadow-2xl relative min-h-[350px]">
+            <div className="lg:col-span-2 rounded-[3rem] overflow-hidden shadow-2xl relative min-h-87.5">
                 <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1500&auto=format&fit=crop" className="absolute inset-0 w-full h-full object-cover" alt="Students" />
-                <div className="absolute inset-0 bg-gradient-to-t from-blue-900/90 via-blue-900/20 to-transparent flex items-end p-10">
+                <div className="absolute inset-0 bg-linear-to-t from-blue-900/90 via-blue-900/20 to-transparent flex items-end p-10">
                     <p className="text-white font-bold italic text-lg leading-tight">"The application was the first step toward my career in Canada."</p>
                 </div>
             </div>

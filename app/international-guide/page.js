@@ -103,13 +103,13 @@ export default function InternationalGuide() {
         </div>
 
         {/* FEATURED GLOBAL IMAGE */}
-        <div className="w-full h-[300px] md:h-[450px] rounded-[3rem] overflow-hidden mb-16 shadow-2xl relative border border-slate-200">
+        <div className="w-full h-75-[450px] rounded-[3rem] overflow-hidden mb-16 shadow-2xl relative border border-slate-200">
             <img 
                 src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2084&auto=format&fit=crop" 
                 alt="Diverse International Students" 
                 className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent flex items-end p-12">
+            <div className="absolute inset-0 bg-linear-to-t from-slate-950/90 via-slate-950/20 to-transparent flex items-end p-12">
                 <div className="max-w-xl">
                     <h2 className="text-white text-3xl font-black mb-2 tracking-tight">Alberta Welcomes You</h2>
                     <p className="text-slate-300 font-medium">Join a vibrant community of scholars from over 150 nations.</p>

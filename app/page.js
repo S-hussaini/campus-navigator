@@ -41,13 +41,13 @@ export default function Home() {
 
             {/* Premium Search Bar */}
             <div className="max-w-3xl mx-auto relative group mb-12">
-              <div className="relative flex bg-white rounded-[2rem] shadow-2xl border border-slate-100 p-3 items-center transition-all focus-within:ring-4 focus-within:ring-blue-100">
+              <div className="relative flex bg-white rounded-4xl shadow-2xl border border-slate-100 p-3 items-center transition-all focus-within:ring-4 focus-within:ring-blue-100">
                 <input
                   type="text"
                   placeholder="Ask about programs, visas, or scholarships..."
                   className="grow px-6 py-4 text-lg text-slate-800 focus:outline-none bg-transparent placeholder:text-slate-300"
                 />
-                <button className="bg-blue-900 hover:bg-slate-950 text-white px-12 py-5 rounded-[1.5rem] font-black uppercase tracking-widest text-xs transition-all shadow-lg">
+                <button className="bg-blue-900 hover:bg-slate-950 text-white px-12 py-5 rounded-3xl font-black uppercase tracking-widest text-xs transition-all shadow-lg">
                   Start Chat
                 </button>
               </div>
@@ -63,7 +63,7 @@ export default function Home() {
                 { title: "Adult Learners", desc: "Returning to study or upskilling.", icon: <UserGroupIcon className="w-6 h-6"/>, link: "/adultlearners" }
             ].map((path, i) => (
                 <Link href={path.link} key={i}>
-                    <div className="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-xl shadow-slate-200/50 hover:-translate-y-2 transition-all cursor-pointer group">
+                    <div className="bg-white p-8 rounded-4xl border border-slate-100 shadow-xl shadow-slate-200/50 hover:-translate-y-2 transition-all cursor-pointer group">
                         <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-blue-900 group-hover:text-white transition-all">
                             {path.icon}
                         </div>
@@ -96,9 +96,9 @@ export default function Home() {
               { img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f", city: "Lethbridge", tag: "Community & Science" },
               { img: "https://images.unsplash.com/photo-1498243639359-f7c89517fa01", city: "Medicine Hat", tag: "Innovation Hub" }
             ].map((item, i) => (
-              <div key={i} className="min-w-[300px] md:min-w-[400px] h-[500px] rounded-[2.5rem] overflow-hidden relative group">
+              <div key={i} className="min-w-75 md:min-w-100 h-125 rounded-[2.5rem] overflow-hidden relative group">
                 <img src={`${item.img}?auto=format&fit=crop&q=80&w=800`} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt={item.city} />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex items-end p-8">
+                <div className="absolute inset-0 bg-linear-to-t from-slate-950/80 via-transparent to-transparent flex items-end p-8">
                   <div>
                     <div className="flex items-center gap-2 text-blue-400 mb-1">
                       <MapPinIcon className="w-4 h-4" />
@@ -117,7 +117,7 @@ export default function Home() {
           {/* Card 1: Funding */}
           <div className="group p-12 rounded-[3rem] bg-slate-950 text-white shadow-2xl flex flex-col justify-between overflow-hidden relative">
             <div className="relative z-10">
-              <div className="w-16 h-16 bg-white/10 rounded-[1.5rem] flex items-center justify-center mb-8 border border-white/10">
+              <div className="w-16 h-16 bg-white/10 rounded-3xl flex items-center justify-center mb-8 border border-white/10">
                  <span className="text-2xl font-black text-blue-400">$</span>
               </div>
               <h3 className="text-4xl font-black mb-6 tracking-tight">Alberta Student Aid</h3>
@@ -134,7 +134,7 @@ export default function Home() {
           {/* Card 2: Quiz */}
           <div className="group p-12 rounded-[3rem] bg-white border border-slate-100 shadow-2xl flex flex-col justify-between overflow-hidden relative">
             <div className="relative z-10">
-              <div className="w-16 h-16 bg-blue-50 text-blue-900 rounded-[1.5rem] flex items-center justify-center mb-8 border border-blue-100">
+              <div className="w-16 h-16 bg-blue-50 text-blue-900 rounded-3xl flex items-center justify-center mb-8 border border-blue-100">
                 <SparklesIcon className="w-8 h-8" />
               </div>
               <h3 className="text-4xl font-black text-slate-950 mb-6 tracking-tight">Pathfinder Quiz</h3>
@@ -143,7 +143,7 @@ export default function Home() {
               </p>
             </div>
             <Link href="/pathfinder">
-              <button className="relative z-10 w-full py-6 bg-blue-900 text-white font-black uppercase tracking-[0.2em] text-xs rounded-[1.5rem] hover:bg-slate-900 transition-all shadow-xl shadow-blue-100">
+              <button className="relative z-10 w-full py-6 bg-blue-900 text-white font-black uppercase tracking-[0.2em] text-xs rounded-3xl hover:bg-slate-900 transition-all shadow-xl shadow-blue-100">
                 Start Assessment
               </button>
             </Link>

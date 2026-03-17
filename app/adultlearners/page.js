@@ -105,7 +105,7 @@ export default function AdultLearnersPage() {
               { step: "03", title: "Sponsorship", text: "Apply for the Job Grant or Student Aid for Adults." },
               { step: "04", title: "Enroll", text: "Start your program with a cohort of like-minded peers." }
             ].map((s, i) => (
-              <div key={i} className="bg-slate-50 p-8 rounded-[2rem] border border-slate-100 relative group hover:bg-white hover:shadow-lg transition-all">
+              <div key={i} className="bg-slate-50 p-8 rounded-4xl border border-slate-100 relative group hover:bg-white hover:shadow-lg transition-all">
                 <span className="text-4xl font-black text-slate-200 group-hover:text-indigo-100 transition-colors block mb-4">{s.step}</span>
                 <h4 className="font-black text-slate-900 mb-2 tracking-tight">{s.title}</h4>
                 <p className="text-slate-500 text-xs font-medium leading-relaxed">{s.text}</p>
