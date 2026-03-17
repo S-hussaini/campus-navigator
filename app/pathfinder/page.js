@@ -66,7 +66,7 @@ export default function PathfinderPage() {
   return (
     <main className="min-h-screen bg-white text-[#1a1a1a] antialiased flex flex-col">
       {/* 1. STICKY HEADER */}
-      <nav className="w-full border-b border-gray-100 py-4 px-8 flex justify-between items-center bg-white/80 backdrop-blur-md sticky top-0 z-[100]">
+      <nav className="w-full border-b border-gray-100 py-4 px-8 flex justify-between items-center bg-white/80 backdrop-blur-md sticky top-0 z-100">
         <Link href="/campus" className="flex items-center gap-2 group">
           <div className="w-8 h-8 bg-[#b22222] rounded-full flex items-center justify-center text-white font-bold text-xs transition-transform group-hover:scale-110">
             A
@@ -84,7 +84,7 @@ export default function PathfinderPage() {
       </nav>
 
       {/* 2. MAIN CONTENT AREA */}
-      <div className="flex-grow">
+      <div className="grow">
         {step === -1 ? (
           /* YOUR ORIGINAL HERO SECTION */
           <div className="flex flex-col animate-in fade-in duration-700">
