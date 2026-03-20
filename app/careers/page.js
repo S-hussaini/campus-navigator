@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import Fuse from "fuse.js";
 import PageHeader from "../../components/SiteHeader";
 
 // Your provided list of institutions
@@ -98,6 +99,14 @@ const majorsData = [
   { title: "Child and Youth Care", category: "Community", description: "Support for vulnerable children and adolescent development.", schools: ["MacEwan University", "Mount Royal University"] }
 ];
 
+function normalizeText(text) {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s]/g, "")
+    .replace(/\s+/g, " ");
+}
+
 export default function MajorsPage() {
   const [search, setSearch] = useState("");
 
@@ -105,13 +114,71 @@ export default function MajorsPage() {
     return albertaInstitutions.find(inst => inst.name === name || inst.name.includes(name)) || { logo: "", link: "#" };
   };
 
+  const preparedMajors = useMemo(() => {
+    return majorsData.map((major) => ({
+      ...major,
+      searchText: normalizeText([
+        major.title,
+        major.category,
+        major.description,
+        ...(major.schools || []),
+      ].join(" ")),
+    }));
+  }, []);
+
+  const strictFuse = useMemo(() => {
+    return new Fuse(preparedMajors, {
+      includeScore: true,
+      threshold: 0.24,
+      ignoreLocation: true,
+      keys: [
+        { name: "title", weight: 0.42 },
+        { name: "category", weight: 0.18 },
+        { name: "schools", weight: 0.22 },
+        { name: "description", weight: 0.12 },
+        { name: "searchText", weight: 0.06 },
+      ],
+      getFn: (obj, path) => {
+        const value = obj[path];
+        if (Array.isArray(value)) return value.map((v) => normalizeText(String(v)));
+        return normalizeText(String(value || ""));
+      },
+    });
+  }, [preparedMajors]);
+
+  const looseFuse = useMemo(() => {
+    return new Fuse(preparedMajors, {
+      includeScore: true,
+      threshold: 0.38,
+      ignoreLocation: true,
+      keys: [
+        { name: "title", weight: 0.38 },
+        { name: "category", weight: 0.16 },
+        { name: "schools", weight: 0.22 },
+        { name: "description", weight: 0.16 },
+        { name: "searchText", weight: 0.08 },
+      ],
+      getFn: (obj, path) => {
+        const value = obj[path];
+        if (Array.isArray(value)) return value.map((v) => normalizeText(String(v)));
+        return normalizeText(String(value || ""));
+      },
+    });
+  }, [preparedMajors]);
+
   const filtered = useMemo(() => {
-    const term = search.toLowerCase();
-    return majorsData.filter((m) =>
-      m.title.toLowerCase().includes(term) ||
-      m.schools.some(s => s.toLowerCase().includes(term))
-    );
-  }, [search]);
+    const normalizedSearch = normalizeText(search);
+
+    if (!normalizedSearch) return preparedMajors;
+
+    let fuseResults = strictFuse.search(normalizedSearch);
+
+    if (fuseResults.length === 0 || (fuseResults[0]?.score ?? 1) > 0.18) {
+      fuseResults = looseFuse.search(normalizedSearch);
+    }
+
+    return fuseResults.map((r) => r.item);
+  }, [search, preparedMajors, strictFuse, looseFuse]);
 
   return (
     <div className="min-h-screen bg-[#F1F5F9] antialiased text-slate-900 font-sans">
@@ -166,7 +233,7 @@ export default function MajorsPage() {
                       title={schoolName}
                       className="p-1.5 bg-slate-50 border border-slate-200 hover:border-blue-900 group/logo"
                     >
-                      <img src={school.logo} alt="" className="w-20 h-20 object-contain  group-hover/logo:opacity-100" />
+                      <img src={school.logo} alt="School Logo" className="w-20 h-20 object-contain  group-hover/logo:opacity-100" />
                     </a>
                   );
                 })}
