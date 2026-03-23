@@ -1,0 +1,30 @@
+export const allowedInstitutions = [
+  { name: "University of Alberta", domain: "ualberta.ca", homepage: "https://www.ualberta.ca/" },
+  { name: "University of Calgary", domain: "ucalgary.ca", homepage: "https://www.ucalgary.ca/" },
+  { name: "University of Lethbridge", domain: "ulethbridge.ca", homepage: "https://www.ulethbridge.ca/" },
+  { name: "Athabasca University", domain: "athabascau.ca", homepage: "https://www.athabascau.ca/" },
+  { name: "MacEwan University", domain: "macewan.ca", homepage: "https://www.macewan.ca/" },
+  { name: "Mount Royal University", domain: "mtroyal.ca", homepage: "https://www.mtroyal.ca/" },
+  { name: "Alberta University of the Arts", domain: "auarts.ca", homepage: "https://www.auarts.ca/" },
+  { name: "Bow Valley College", domain: "bowvalleycollege.ca", homepage: "https://bowvalleycollege.ca/" },
+  { name: "Keyano College", domain: "keyano.ca", homepage: "https://www.keyano.ca/" },
+  { name: "Lakeland College", domain: "lakelandcollege.ca", homepage: "https://www.lakelandcollege.ca/" },
+  { name: "Lethbridge Polytechnic", domain: "lethpolytech.ca", homepage: "https://lethpolytech.ca/" },
+  { name: "Medicine Hat College", domain: "mhc.ab.ca", homepage: "https://www.mhc.ab.ca/" },
+  { name: "NAIT", domain: "nait.ca", homepage: "https://www.nait.ca/" },
+  { name: "NorQuest College", domain: "norquest.ca", homepage: "https://www.norquest.ca/" },
+  { name: "Northern Lakes College", domain: "northernlakescollege.ca", homepage: "https://www.northernlakescollege.ca/" },
+  { name: "Olds College", domain: "oldscollege.ca", homepage: "https://www.oldscollege.ca/" },
+  { name: "Portage College", domain: "portagecollege.ca", homepage: "https://www.portagecollege.ca/" },
+  { name: "Red Deer Polytechnic", domain: "rdpolytech.ca", homepage: "https://rdpolytech.ca/" },
+  { name: "SAIT", domain: "sait.ca", homepage: "https://www.sait.ca/" },
+  { name: "The King's University", domain: "kingsu.ca", homepage: "https://www.kingsu.ca/" },
+  { name: "Ambrose University", domain: "ambrose.edu", homepage: "https://ambrose.edu/" },
+  { name: "Burman University", domain: "burmanu.ca", homepage: "https://burmanu.ca/" },
+  { name: "Concordia University of Edmonton", domain: "concordia.ab.ca", homepage: "https://concordia.ab.ca/" },
+  { name: "St. Mary's University", domain: "stmu.ca", homepage: "https://stmu.ca/" },
+  { name: "Prairie College", domain: "prairie.edu", homepage: "https://prairie.edu/" },
+  { name: "Transfer Alberta", domain: "transferalberta.alberta.ca", homepage: "https://transferalberta.alberta.ca/" }
+];
+
+export const allowedDomains = allowedInstitutions.map((item) => item.domain);

@@ -1,8 +1,9 @@
 "use client";
-import Image from 'next/image';
+import { useState } from "react";
 import Link from 'next/link';
 import PageHeader from "../components/SiteHeader";
 import SiteFooter from "../components/SiteFooter";
+import SearchPopupWidget from "../components/SearchPopupWidget";
 import { 
   AcademicCapIcon, 
   SparklesIcon, 
@@ -13,6 +14,14 @@ import {
 } from "@heroicons/react/24/outline";
 
 export default function Home() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  function handleHeroSearch() {
+    if (!searchQuery.trim()) return;
+    setIsSearchOpen(true);
+  }
+
   return (
     <div className="min-h-screen bg-[#fafafa] flex flex-col antialiased text-slate-900 font-light">
       <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -44,11 +53,19 @@ export default function Home() {
               <div className="relative flex bg-white rounded-4xl shadow-2xl border border-slate-100 p-3 items-center transition-all focus-within:ring-4 focus-within:ring-blue-100">
                 <input
                   type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") handleHeroSearch();
+                  }}
                   placeholder="Ask about programs, visas, or scholarships..."
                   className="grow px-6 py-4 text-lg text-slate-800 focus:outline-none bg-transparent placeholder:text-slate-300"
                 />
-                <button className="bg-blue-900 hover:bg-slate-950 text-white px-12 py-5 rounded-3xl font-black uppercase tracking-widest text-xs transition-all shadow-lg">
-                  Start Chat
+                <button
+                  onClick={handleHeroSearch}
+                  className="bg-blue-900 hover:bg-slate-950 text-white px-12 py-5 rounded-3xl font-black uppercase tracking-widest text-xs transition-all shadow-lg"
+                >
+                  Search
                 </button>
               </div>
             </div>
@@ -153,6 +170,11 @@ export default function Home() {
       </main>
 
       <SiteFooter />
+      <SearchPopupWidget
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+        initialQuery={searchQuery}
+      />
     </div>
   );
 }
