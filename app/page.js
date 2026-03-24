@@ -109,9 +109,9 @@ export default function Home() {
           <div className="flex gap-6 px-6 overflow-x-auto pb-8 no-scrollbar">
             {[
               { img: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846", city: "Calgary", tag: "Tech & Business" },
-              { img: "https://images.unsplash.com/photo-152305085306e-8a3d3efaf58d", city: "Edmonton", tag: "Research & Arts" },
-              { img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f", city: "Lethbridge", tag: "Community & Science" },
-              { img: "https://images.unsplash.com/photo-1498243639359-f7c89517fa01", city: "Medicine Hat", tag: "Innovation Hub" }
+              { img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f", city: "Edmonton", tag: "Research & Arts" },
+              { img: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846", city: "Lethbridge", tag: "Community & Science" },
+              { img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f", city: "Medicine Hat", tag: "Innovation Hub" }
             ].map((item, i) => (
               <div key={i} className="min-w-75 md:min-w-100 h-125 rounded-[2.5rem] overflow-hidden relative group">
                 <img src={`${item.img}?auto=format&fit=crop&q=80&w=800`} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt={item.city} />
@@ -132,7 +132,7 @@ export default function Home() {
         {/* CORE TOOLS SECTION */}
         <section className="max-w-6xl mx-auto px-6 pb-32 grid grid-cols-1 md:grid-cols-2 gap-8 relative z-20 mt-12">
           {/* Card 1: Funding */}
-          <div className="group p-12 rounded-[3rem] bg-slate-950 text-white shadow-2xl flex flex-col justify-between overflow-hidden relative">
+          <div className="group p-12 rounded-[3rem] bg-blue-900 text-white shadow-2xl flex flex-col justify-between overflow-hidden relative">
             <div className="relative z-10">
               <div className="w-16 h-16 bg-white/10 rounded-3xl flex items-center justify-center mb-8 border border-white/10">
                  <span className="text-2xl font-black text-blue-400">$</span>
@@ -142,10 +142,10 @@ export default function Home() {
                 Access curated financial aid, grants, and bursaries across Alberta's academic landscape.
               </p>
             </div>
-            <Link href="/funding" className="relative z-10 inline-flex items-center gap-3 px-8 py-4 bg-white/10 hover:bg-white/20 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all border border-white/10 w-fit">
+            <Link href="https://studentaid.alberta.ca/" className="relative z-10 inline-flex items-center gap-3 px-8 py-4 bg-white/10 hover:bg-white/20 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all border border-white/10 w-fit">
               Explore Funding
             </Link>
-            <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-blue-600/20 rounded-full blur-[100px]" />
+            <div className="absolute -bottom-20 -right-20 w-64 h-64 rounded-full blur-[100px]" />
           </div>
 
           {/* Card 2: Quiz */}
