@@ -142,7 +142,11 @@ export default function Home() {
                 Access curated financial aid, grants, and bursaries across Alberta's academic landscape.
               </p>
             </div>
-            <Link href="https://studentaid.alberta.ca/" className="relative z-10 inline-flex items-center gap-3 px-8 py-4 bg-white/10 hover:bg-white/20 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all border border-white/10 w-fit">
+            <Link 
+              href="https://studentaid.alberta.ca/" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative z-10 inline-flex items-center gap-3 px-8 py-4 bg-white/10 hover:bg-white/20 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all border border-white/10 w-fit">
               Explore Funding
             </Link>
             <div className="absolute -bottom-20 -right-20 w-64 h-64 rounded-full blur-[100px]" />

@@ -75,6 +75,7 @@ export default function PathfinderPage() {
         </Link>
 
         <div className="hidden md:flex items-center gap-8 text-xs font-bold uppercase tracking-widest text-gray-500">
+          <Link href="/" className="hover:text-[#b22222]">Home</Link>
           <Link href="/campus" className="hover:text-[#b22222]">Campuses</Link>
           <Link href="/careers" className="hover:text-blue-900">Careers</Link>
           <Link href="/contact" className="border-2 border-[#1a1a1a] px-4 py-2 rounded-md hover:bg-[#1a1a1a] hover:text-white transition-all text-[#1a1a1a]">
