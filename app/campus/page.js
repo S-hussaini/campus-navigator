@@ -1,10 +1,12 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react"; // Added useEffect
-import { useSearchParams } from "next/navigation"; // Added useSearchParams
+import { useState, useMemo, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import Fuse from "fuse.js";
 import PageHeader from "../../components/SiteHeader";
 import Link from "next/link";
+import ReactMarkdown from "react-markdown";
+import { Sparkles, MapPin, GraduationCap, Clock } from "lucide-react";
 
 const albertaInstitutions = [
   {
@@ -280,10 +282,44 @@ function normalizeText(text) {
 export default function CollegesPage() {
   const [search, setSearch] = useState("");
   const [activeFilter, setActiveFilter] = useState("All");
-  
+
+  // AI Form State
+  const [aiCity, setAiCity] = useState("");
+  const [aiType, setAiType] = useState("");
+  const [aiDuration, setAiDuration] = useState("");
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiResult, setAiResult] = useState(null);
+  const [aiError, setAiError] = useState("");
+
+  const handleAiSubmit = async () => {
+    setAiLoading(true);
+    setAiError("");
+    setAiResult(null);
+
+    try {
+      const response = await fetch("/api/school-finder", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ city: aiCity, type: aiType, duration: aiDuration }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed context");
+      }
+
+      setAiResult(data.text);
+    } catch (err) {
+      setAiError("Sorry, I couldn't get a recommendation right now. Please try again later.");
+    } finally {
+      setAiLoading(false);
+    }
+  };
+
   // LOGIC TO CAPTURE URL PARAMETERS
   const searchParams = useSearchParams();
-  
+
   useEffect(() => {
     const query = searchParams.get("search");
     if (query) {
@@ -383,7 +419,7 @@ export default function CollegesPage() {
 
           <div className="w-full md:w-96 relative group">
             <input
-              type="text" 
+              type="text"
               placeholder="Search Unis, Colleges, Careers"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -398,21 +434,139 @@ export default function CollegesPage() {
             <button
               key={filter}
               onClick={() => setActiveFilter(filter)}
-              className={`px-6 py-2.5 rounded-full text-xs font-bold tracking-wide transition-all border ${
-                activeFilter === filter 
-                  ? "bg-slate-950 text-white border-slate-950 shadow-xl" 
-                  : "bg-white text-slate-500 border-slate-200 hover:border-blue-900"
-              }`}
+              className={`px-6 py-2.5 rounded-full text-xs font-bold tracking-wide transition-all border ${activeFilter === filter
+                ? "bg-slate-950 text-white border-slate-950 shadow-xl"
+                : "bg-white text-slate-500 border-slate-200 hover:border-blue-900"
+                }`}
             >
               {filter === "All" ? "All 26 Schools" : filter + "s"}
             </button>
           ))}
           <Link href="/careers">
-             <button className="px-6 py-2.5 rounded-full text-xs font-bold border border-blue-100 bg-blue-50 text-blue-900 hover:bg-blue-100 transition-all">
-               Career Directory
-             </button>
+            <button className="px-6 py-2.5 rounded-full text-xs font-bold border border-blue-100 bg-blue-50 text-blue-900 hover:bg-blue-100 transition-all">
+              Career Directory
+            </button>
           </Link>
         </div>
+
+        {/* AI Advisor Form Section */}
+        <section className="mb-20 bg-gradient-to-br from-blue-900 via-slate-900 to-slate-950 rounded-[2.5rem] p-8 md:p-12 text-white shadow-2xl relative overflow-hidden">
+          {/* Decorative background elements */}
+          <div className="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-blue-500 rounded-full mix-blend-multiply filter blur-[80px] opacity-40"></div>
+          <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-80 h-80 bg-indigo-500 rounded-full mix-blend-multiply filter blur-[80px] opacity-30"></div>
+
+          <div className="relative z-10">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center">
+                <Sparkles className="text-blue-300 w-5 h-5" />
+              </div>
+              <h2 className="text-3xl font-extrabold tracking-tight">Campus Assistant</h2>
+            </div>
+            <p className="text-blue-100 max-w-2xl mb-8 text-lg font-light">
+              Not sure where to start? Tell us what you're looking for, and our AI will suggest the best optimistic options for you in Alberta.
+            </p>
+
+            {/* The Form */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+              {/* City Dropdown */}
+              <div className="bg-white/10 p-1.5 rounded-2xl backdrop-blur-sm border border-white/10">
+                <div className="flex items-center px-4 pt-2 pb-1 gap-2 text-blue-200">
+                  <MapPin className="w-4 h-4" />
+                  <span className="text-xs font-bold uppercase tracking-widest">City</span>
+                </div>
+                <select
+                  value={aiCity}
+                  onChange={(e) => setAiCity(e.target.value)}
+                  className="w-full bg-transparent text-white px-4 pb-2 pt-1 font-medium outline-none appearance-none cursor-pointer"
+                >
+                  <option value="" className="text-slate-900">Any City</option>
+                  <option value="Edmonton" className="text-slate-900">Edmonton</option>
+                  <option value="Calgary" className="text-slate-900">Calgary</option>
+                  <option value="Lethbridge" className="text-slate-900">Lethbridge</option>
+                  <option value="Red Deer" className="text-slate-900">Red Deer</option>
+                  <option value="Grande Prairie" className="text-slate-900">Grande Prairie</option>
+                  <option value="Online" className="text-slate-900">Online / Remote</option>
+                </select>
+              </div>
+
+              {/* Type Dropdown */}
+              <div className="bg-white/10 p-1.5 rounded-2xl backdrop-blur-sm border border-white/10">
+                <div className="flex items-center px-4 pt-2 pb-1 gap-2 text-blue-200">
+                  <GraduationCap className="w-4 h-4" />
+                  <span className="text-xs font-bold uppercase tracking-widest">Institution Type</span>
+                </div>
+                <select
+                  value={aiType}
+                  onChange={(e) => setAiType(e.target.value)}
+                  className="w-full bg-transparent text-white px-4 pb-2 pt-1 font-medium outline-none appearance-none cursor-pointer"
+                >
+                  <option value="" className="text-slate-900">Any Type</option>
+                  <option value="University" className="text-slate-900">University</option>
+                  <option value="Polytechnic" className="text-slate-900">Polytechnic</option>
+                  <option value="College" className="text-slate-900">College</option>
+                </select>
+              </div>
+
+              {/* Duration Dropdown */}
+              <div className="bg-white/10 p-1.5 rounded-2xl backdrop-blur-sm border border-white/10">
+                <div className="flex items-center px-4 pt-2 pb-1 gap-2 text-blue-200">
+                  <Clock className="w-4 h-4" />
+                  <span className="text-xs font-bold uppercase tracking-widest">Duration</span>
+                </div>
+                <select
+                  value={aiDuration}
+                  onChange={(e) => setAiDuration(e.target.value)}
+                  className="w-full bg-transparent text-white px-4 pb-2 pt-1 font-medium outline-none appearance-none cursor-pointer"
+                >
+                  <option value="" className="text-slate-900">Any Duration</option>
+                  <option value="2 Years (Diploma/Certificate)" className="text-slate-900">1-2 Years (Diploma)</option>
+                  <option value="4 Years (Degree)" className="text-slate-900">4 Years (Degree)</option>
+                </select>
+              </div>
+            </div>
+
+            <button
+              onClick={handleAiSubmit}
+              disabled={aiLoading}
+              className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-4 px-8 rounded-xl transition-all shadow-[0_0_20px_rgba(59,130,246,0.5)] hover:shadow-[0_0_30px_rgba(59,130,246,0.8)] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            >
+              {aiLoading ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <span>Thinking...</span>
+                </>
+              ) : (
+                <>
+                  <Sparkles className="w-5 h-5" />
+                  <span>Get Your Perfect Match</span>
+                </>
+              )}
+            </button>
+
+            {/* AI Results Area */}
+            {aiError && (
+              <div className="mt-8 bg-red-500/10 border border-red-500/20 text-red-200 px-6 py-4 rounded-2xl">
+                {aiError}
+              </div>
+            )}
+
+            {aiResult && (
+              <div className="mt-8 bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-6 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                <div className="flex items-center gap-2 mb-4 border-b border-white/10 pb-4">
+                  <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="text-xs font-bold uppercase tracking-widest text-blue-200">Your Perfect Match</span>
+                </div>
+                <div className="prose prose-invert prose-blue max-w-none 
+                  prose-p:text-blue-50 prose-p:leading-relaxed prose-p:mb-4 
+                  prose-strong:text-white prose-strong:font-bold 
+                  prose-ul:text-blue-100 prose-ul:mb-4
+                  prose-li:marker:text-blue-400">
+                  <ReactMarkdown>{aiResult}</ReactMarkdown>
+                </div>
+              </div>
+            )}
+          </div>
+        </section>
 
         {/* Cinematic Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
@@ -430,7 +584,7 @@ export default function CollegesPage() {
               <div className="p-8 pt-6 flex flex-col grow">
                 <h3 className="text-xl font-bold text-slate-900 mb-1">{inst.name}</h3>
                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">{inst.location}, AB</p>
-                
+
                 {/* Career Tags */}
                 <div className="flex flex-wrap gap-1 mb-6">
                   {inst.careers?.map(c => (
