@@ -233,7 +233,7 @@ export default function MajorsPage() {
                       title={schoolName}
                       className="p-1.5 bg-slate-50 border border-slate-200 hover:border-blue-900 group/logo"
                     >
-                      <img src={school.logo} alt="School Logo" className="w-20 h-20 object-contain  group-hover/logo:opacity-100" />
+                      <img src={school.logo || undefined} alt="School Logo" className="w-20 h-20 object-contain  group-hover/logo:opacity-100" />
                     </a>
                   );
                 })}
