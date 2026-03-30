@@ -76,7 +76,10 @@ export default function AdultLearnersPage() {
                 <p className="text-slate-400 text-lg mb-10 leading-relaxed">
                   Did you know your employer can receive up to <span className="text-white font-bold">$10,000</span> to cover 2/3 of your training costs? High-demand skills are prioritized.
                 </p>
-                <button className="bg-indigo-600 hover:bg-indigo-500 text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-xs transition-all shadow-xl shadow-indigo-900/40">
+                <button 
+                  onClick={() => window.open('https://www.alberta.ca/canada-alberta-job-grant', '_blank', 'noopener,noreferrer')}
+                  className="bg-indigo-600 hover:bg-indigo-500 text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-xs transition-all shadow-xl shadow-indigo-900/40"
+                >
                   Check Eligibility
                 </button>
               </div>
