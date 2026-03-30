@@ -7,6 +7,7 @@ import PageHeader from "../../components/SiteHeader";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import { Sparkles, MapPin, GraduationCap, Clock } from "lucide-react";
+import { Suspense } from "react";
 
 const albertaInstitutions = [
   {
@@ -279,7 +280,7 @@ function normalizeText(text) {
     .replace(/\s+/g, " ");
 }
 
-export default function CollegesPage() {
+function CollegesPageContent() {
   const [search, setSearch] = useState("");
   const [activeFilter, setActiveFilter] = useState("All");
 
@@ -604,5 +605,12 @@ export default function CollegesPage() {
         </div>
       </main>
     </div>
+  );
+}
+export default function CollegesPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CollegesPageContent />
+    </Suspense>
   );
 }
