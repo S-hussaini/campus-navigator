@@ -486,6 +486,13 @@ function CollegesPageContent() {
                   <option value="Lethbridge" className="text-slate-900">Lethbridge</option>
                   <option value="Red Deer" className="text-slate-900">Red Deer</option>
                   <option value="Grande Prairie" className="text-slate-900">Grande Prairie</option>
+                  <option value="Fort McMurray" className="text-slate-900">Fort McMurray</option>
+                  <option value="Lac La Biche" className="text-slate-900">Lac La Biche</option>
+                  <option value="Lacombe" className="text-slate-900">Lacombe</option>
+                  <option value="Medicine Hat" className="text-slate-900">Medicine Hat</option>
+                  <option value="Olds" className="text-slate-900">Olds</option>
+                  <option value="Slave Lake" className="text-slate-900">Slave Lake</option>
+                  <option value="Vermilion" className="text-slate-900">Vermilion</option>
                   <option value="Online" className="text-slate-900">Online / Remote</option>
                 </select>
               </div>
