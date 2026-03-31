@@ -562,7 +562,15 @@ function CollegesPageContent() {
                   prose-strong:text-white prose-strong:font-bold 
                   prose-ul:text-blue-100 prose-ul:mb-4
                   prose-li:marker:text-blue-400">
-                  <ReactMarkdown>{aiResult}</ReactMarkdown>
+                  <ReactMarkdown
+                    components={{
+                      a: ({ node, ...props }) => (
+                        <a {...props} target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-300 transition-colors" />
+                      ),
+                    }}
+                  >
+                    {aiResult}
+                  </ReactMarkdown>
                 </div>
               </div>
             )}
