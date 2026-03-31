@@ -58,7 +58,7 @@ export default function Home() {
                   onKeyDown={(e) => {
                     if (e.key === "Enter") handleHeroSearch();
                   }}
-                  placeholder="Ask about programs, visas, or scholarships..."
+                  placeholder="What's your interest or program?"
                   className="grow px-6 py-4 text-lg text-slate-800 focus:outline-none bg-transparent placeholder:text-slate-300"
                 />
                 <button

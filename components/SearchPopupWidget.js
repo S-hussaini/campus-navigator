@@ -93,7 +93,7 @@ export default function SearchPopupWidget({
           <div className="flex items-center gap-3">
             <div className="w-2 h-2 bg-[#4BAE53] rounded-full animate-pulse" />
             <span className="font-bold tracking-tight text-sm uppercase">
-              Campus Assistant
+              Search Results
             </span>
           </div>
 
