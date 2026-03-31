@@ -16,7 +16,7 @@ const albertaInstitutions = [
     logo: "/UniversityofAlberta.png",
     type: "University",
     location: "Edmonton",
-    image: "https://images.unsplash.com/photo-1541339907198-e08756ebafe3?q=80&w=800",
+    image: "https://www.ualberta.ca/en/media-library/ualberta/campus-life/our-campus-arts-building.jpg",
     careers: ["Doctor", "Engineer", "Lawyer", "Scientist", "Pharmacist"],
     keywords: ["uofa", "u of a", "ualberta", "edmonton university", "medicine", "engineering", "pharmacy"]
   },
@@ -26,7 +26,7 @@ const albertaInstitutions = [
     logo: "/AZ-university-of-calgary.png",
     type: "University",
     location: "Calgary",
-    image: "https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=800",
+    image: "https://www.ucalgary.ca/live-uc-ucalgary-site/sites/default/files/styles/ucws_hero_cta_desktop/public/2024-11/240826_Campus-Aerial_014_rev.jpg",
     careers: ["Architect", "Veterinarian", "Nurse", "Software Developer", "Business Lead"],
     keywords: ["uofc", "u of c", "ucalgary", "calgary university", "software", "nursing", "vet"]
   },
@@ -36,7 +36,7 @@ const albertaInstitutions = [
     logo: "/UoL-logo.png",
     type: "University",
     location: "Lethbridge",
-    image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=800",
+    image: "https://www.ulethbridge.ca/unews/sites/default/files/EDI-Campus.jpg",
     careers: ["Neuroscientist", "Teacher", "Artist", "Financial Analyst", "Political Scientist"],
     keywords: ["uleth", "u of l", "lethbridge university", "teacher", "education"]
   },
@@ -46,7 +46,7 @@ const albertaInstitutions = [
     logo: "/AU-athabasca-university.jpg",
     type: "University",
     location: "Online",
-    image: "https://images.unsplash.com/photo-1501503060445-738875b1017c?q=80&w=800",
+    image: "https://www.athabascau.ca/news/_files/images/athabasca-campus-aerial.jpg",
     careers: ["Accountant", "Psychologist", "HR Manager", "Writer", "Data Scientist"],
     keywords: ["au", "athabasca online university", "online university canada", "distance education"]
   },
@@ -66,7 +66,7 @@ const albertaInstitutions = [
     logo: "/MRU-TripleStack-CMYK.png",
     type: "University",
     location: "Calgary",
-    image: "https://images.unsplash.com/photo-1498243639359-f7c895171f5f?q=80&w=800",
+    image: "https://www.mtroyal.ca/AboutMountRoyal/CampusesTours/_images/Campus-Tours-RLLC-QuickLink.jpg",
     careers: ["Pilot", "Public Relations", "Interior Designer", "Environmental Scientist"],
     keywords: ["mru", "mount royal", "mount royal calgary", "aviation"]
   },
@@ -131,12 +131,12 @@ const albertaInstitutions = [
     keywords: ["nwp", "gprc", "grande prairie regional college", "northwestern polytechnic"]
   },
   {
-    name: "Lakeland Polytechnic",
+    name: "Lakeland College",
     link: "https://www.lakelandcollege.ca",
     logo: "/lakeland.png",
     type: "Polytechnic",
     location: "Vermilion",
-    image: "https://images.unsplash.com/photo-1500382017468-9049fee74a62?q=80&w=800",
+    image: "https://study.alberta.ca/media/1207/lakeland_feature.jpg",
     careers: ["Farm Manager", "Firefighter", "Vet Tech", "Esthetician"],
     keywords: ["lakeland college", "lakeland poly", "agriculture college"]
   },
@@ -206,7 +206,7 @@ const albertaInstitutions = [
     logo: "/nlc.png",
     type: "College",
     location: "Slave Lake",
-    image: "https://images.unsplash.com/photo-1500382017468-9049fee74a62?q=80&w=800",
+    image: "https://www.clarkbuilders.com/hubfs/Inst_HE_Northern%20Lakes%20College%20Main.jpg",
     careers: ["Community Health Worker", "Trades Prep", "Admin Support"],
     keywords: ["nlc", "northern lakes", "slave lake college"]
   },
@@ -236,7 +236,7 @@ const albertaInstitutions = [
     logo: "/concordia.avif",
     type: "University",
     location: "Edmonton",
-    image: "https://images.unsplash.com/photo-1568219656418-1593299c3f9b?q=80&w=800",
+    image: "https://concordia.ab.ca/wp-content/uploads/2020/03/Campus-Front-2019-sm-768x512.jpg",
     careers: ["Information Security", "Management", "Science Researcher"],
     keywords: ["cue", "concordia edmonton", "concordia university edmonton"]
   },
