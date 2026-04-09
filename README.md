@@ -1,36 +1,126 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Campus Navigator – Alberta Institutes Guide
+
+Campus Navigator is a web-based platform designed to help students explore and get accurate information about all 26 public institutes in Alberta.
+
+The platform provides a centralized solution to answer common student questions regarding programs, admissions, and institutions, improving accessibility and decision-making.
+
+---
+
+##  Live Application
+
+Access the deployed application here:
+ https://campus-navigator-seven.vercel.app/
+
+---
+
+##  Features
+
+* Browse all 26 Alberta institutes in one place
+* Search and explore institution details
+* Get answers to common student questions
+* Clean and user-friendly interface
+* Fast and responsive web experience
+
+---
+
+## Tech Stack
+
+Frontend: React.js (Next.js)
+Deployment: Vercel
+APIs & Services:
+Google Gemini API (AI-powered responses)
+Resend API (email functionality)
+
+---
+
+## Project Structure
+
+```
+
+/app         → Application routes and pages (Next.js App Router)
+/components  → Reusable UI components
+/lib         → API integrations and utility functions
+/data        → Static or mock data used in the application
+/public      → Static assets (images, icons, etc.)
+/style       → Global and component-level styling
+```
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### 1. Clone the Repository
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+git clone https://github.com/S-hussaini/campus-navigator.git
+cd campus-navigator
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### 2. Install Dependencies
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+npm install
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+### 3. Environment Variables
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This project requires environment variables to run.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Create a .env.local file in the root directory and add the following:
 
-## Deploy on Vercel
+NEXT_PUBLIC_GEMINI_API_KEY=your_api_key
+RESEND_API_KEY=your_api_key
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 4. Run the Project
+
+```
+npm run dev
+```
+
+---
+
+## How to Use
+
+1. Open the application using the live link
+2. Browse available institutes
+3. Search for specific schools or programs
+4. View detailed information about each institute
+5. Use the platform to guide decision-making for education
+
+---
+
+## Known Issues
+
+* Some API responses may be slow depending on external services
+* Minor UI inconsistencies on smaller screen devices
+
+---
+
+## Future Improvements
+
+* Add AI-powered recommendations for students
+* Improve search functionality with filters
+* Enhance mobile responsiveness
+* Add user accounts and saved preferences
+
+---
+
+##  Client Usage Notes
+
+This platform is designed for easy deployment and scalability.
+All configurations (API keys, endpoints) can be updated through environment variables.
+
+## Contact
+
+For support or questions regarding the project:
+
+Developer: Fabulousables
+PM --> Sheeba Hussaini 
+Email: shussainikh@gmail.com 
+
