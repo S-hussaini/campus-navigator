@@ -72,8 +72,9 @@ This project requires environment variables to run.
 
 Create a .env.local file in the root directory and add the following:
 
-NEXT_PUBLIC_GEMINI_API_KEY=your_api_key
-RESEND_API_KEY=your_api_key
+NEXT_PUBLIC_GEMINI_API_KEY=-------
+
+RESEND_API_KEY=-------
 
 ---
 
