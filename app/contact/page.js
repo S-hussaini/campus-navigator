@@ -169,19 +169,6 @@ export default function ContactPage() {
                 </div>
                 <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-indigo-500/10 rounded-full blur-3xl" />
               </div>
-
-              {/* FAQ Section */}
-              <div className="bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm">
-                <h3 className="text-lg font-bold text-slate-900 mb-8 tracking-tight">Quick Resources</h3>
-                <div className="space-y-6">
-                  {['Admissions Timeline', 'Scholarship Deadlines', 'Transfer Guides'].map((q, i) => (
-                    <div key={i} className="group cursor-pointer flex items-center justify-between">
-                      <span className="text-sm text-slate-500 group-hover:text-indigo-600 transition-colors font-medium">{q}</span>
-                      <span className="material-symbols-outlined text-slate-300 group-hover:translate-x-1 transition-transform text-sm">north_east</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
             </div>
 
           </div>

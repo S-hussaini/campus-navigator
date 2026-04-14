@@ -73,11 +73,10 @@ export default function Home() {
         </section>
 
         {/* AUDIENCE PATHS */}
-        <section className="max-w-6xl mx-auto px-6 pb-24 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <section className="max-w-6xl mx-auto px-6 pb-24 grid grid-cols-1 md:grid-cols-3 gap-10">
             {[
                 { title: "High Schoolers", desc: "Grades 10-12 planning for university.", icon: <AcademicCapIcon className="w-6 h-6"/>, link: "/howToApply" },
                 { title: "International", desc: "Coming to Alberta from abroad.", icon: <GlobeAltIcon className="w-6 h-6"/>, link: "/international-guide" },
-                { title: "Adult Learners", desc: "Returning to study or upskilling.", icon: <UserGroupIcon className="w-6 h-6"/>, link: "/adultlearners" }
             ].map((path, i) => (
                 <Link href={path.link} key={i}>
                     <div className="bg-white p-8 rounded-4xl border border-slate-100 shadow-xl shadow-slate-200/50 hover:-translate-y-2 transition-all cursor-pointer group">
