@@ -7,7 +7,7 @@ export async function POST(req) {
   try {
     const { message, history } = await req.json();
     const model = genAI.getGenerativeModel({
-      model: "gemini-3.1-flash-lite-preview",
+      model: "gemini-2.5-flash",
       systemInstruction: `You are the Campus Navigator Assistant, locations in Alberta only. 
       1. Use **bold text** for important keywords or school names. 
       2. Use bulleted lists for program suggestions. 
